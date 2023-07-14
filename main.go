@@ -4,6 +4,7 @@ import (
 	"embed"
 	"github.com/zgwit/iot-master/v3/pkg/web"
 	"jamma/api"
+	"jamma/chat"
 	"jamma/config"
 	_ "jamma/docs"
 	"net/http"
@@ -28,6 +29,9 @@ func main()  {
 
 	//注册前端接口
 	api.RegisterRoutes(engine.Group("/api"))
+
+	//聊天室
+	chat.Register(engine.Group("/chat"))
 
 	//注册接口文档
 	web.RegisterSwaggerDocs(&engine.RouterGroup, "jamma")
