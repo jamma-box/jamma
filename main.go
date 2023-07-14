@@ -1,0 +1,43 @@
+package main
+
+import (
+	"embed"
+	"github.com/zgwit/iot-master/v3/pkg/web"
+	"jamma/api"
+	"jamma/config"
+	"net/http"
+)
+
+//go:embed all:www
+var wwwFiles embed.FS
+
+// @title 物联大师接口文档
+// @version 3.2 版本
+// @description API文档
+// @BasePath /api/
+// @InstanceName master
+// @query.collection.format multi
+
+func main()  {
+
+	config.Load()
+
+	//原本的Main函数
+	engine := web.CreateEngine()
+
+	//注册前端接口
+	api.RegisterRoutes(engine.Group("/api"))
+
+	//注册接口文档
+	web.RegisterSwaggerDocs(&engine.RouterGroup, "jamma")
+
+	//附件
+	engine.Static("/attach", "attach")
+
+	//注册静态页面
+	fs := engine.FileSystem()
+	fs.Put("", http.FS(wwwFiles), "www", "index.html")
+
+	//启动
+	engine.Serve()
+}
