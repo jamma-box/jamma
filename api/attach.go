@@ -33,7 +33,7 @@ type moveBody struct {
 // @Tags attach
 // @Param name path string true "路径"
 // @Produce json
-// @Success 200 {object} curd.ReplyList[attachInfo]
+// @Success 200 {object} ReplyList[attachInfo]
 // @Router /attach/list/{name} [get]
 func attachList(ctx *gin.Context) {
 	//列出目录
@@ -73,7 +73,7 @@ func attachList(ctx *gin.Context) {
 // @Param name path string true "路径"
 // @Accept mpfd
 // @Produce json
-// @Success 200 {object} curd.ReplyData[any]
+// @Success 200 {object} ReplyData[any]
 // @Router /attach/upload/{name} [post]
 func attachUpload(ctx *gin.Context) {
 	dir := filepath.Join(AttachRoot, ctx.Param("name"))
@@ -107,7 +107,7 @@ func attachUpload(ctx *gin.Context) {
 // @Param b body renameBody true "新名称"
 // @Accept json
 // @Produce json
-// @Success 200 {object} curd.ReplyData[any]
+// @Success 200 {object} ReplyData[any]
 // @Router /attach/rename/{name} [post]
 func attachRename(ctx *gin.Context) {
 	var rename renameBody
@@ -134,7 +134,7 @@ func attachRename(ctx *gin.Context) {
 // @Tags attach
 // @Param name path string true "路径"
 // @Produce json
-// @Success 200 {object} curd.ReplyData[any]
+// @Success 200 {object} ReplyData[any]
 // @Router /attach/remove/{name} [get]
 func attachRemove(ctx *gin.Context) {
 	filename := filepath.Join(AttachRoot, ctx.Param("name"))
@@ -154,7 +154,7 @@ func attachRemove(ctx *gin.Context) {
 // @Param b body moveBody true "新路径"
 // @Accept json
 // @Produce json
-// @Success 200 {object} curd.ReplyData[any]
+// @Success 200 {object} ReplyData[any]
 // @Router /attach/move/{name} [post]
 func attachMove(ctx *gin.Context) {
 	var move moveBody
@@ -181,7 +181,7 @@ func attachMove(ctx *gin.Context) {
 // @Tags attach
 // @Param name path string true "路径"
 // @Produce json
-// @Success 200 {object} curd.ReplyData[any]
+// @Success 200 {object} ReplyData[any]
 // @Router /attach/mkdir/{name} [get]
 func attachMkDir(ctx *gin.Context) {
 	filename := filepath.Join(AttachRoot, ctx.Param("name"))

@@ -5,17 +5,18 @@ import (
 	"github.com/zgwit/iot-master/v3/pkg/web"
 	"jamma/api"
 	"jamma/config"
+	_ "jamma/docs"
 	"net/http"
 )
 
 //go:embed all:www
 var wwwFiles embed.FS
 
-// @title 物联大师接口文档
-// @version 3.2 版本
+// @title 接口文档
+// @version 1.0 版本
 // @description API文档
 // @BasePath /api/
-// @InstanceName master
+// @InstanceName jamma
 // @query.collection.format multi
 
 func main()  {

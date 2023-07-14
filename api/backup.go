@@ -38,7 +38,7 @@ func backupExport(ctx *gin.Context) {
 // @Param file formData file true "SQL"
 // @Accept mpfd
 // @Produce json
-// @Success 200 {object} curd.ReplyData[int64] 返回数据数量
+// @Success 200 {object} ReplyData[int64] 返回数据数量
 // @Router /backup/import [post]
 func backupImport(ctx *gin.Context) {
 	formFile, err := ctx.FormFile("file")
