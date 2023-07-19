@@ -74,7 +74,6 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	router.GET("/logout", logout)
 	router.POST("/password", password)
 
-
 	//注册子接口
 	userRouter(router.Group("/user"))
 
@@ -83,6 +82,8 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	backupRouter(router.Group("/backup"))
 
 	attachRouter(router.Group("/attach"))
+
+	gamehallRouter(router.Group("/hall"))
 
 	//TODO 报接口错误（以下代码不生效，路由好像不是树形处理）
 	router.Use(func(ctx *gin.Context) {

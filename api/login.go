@@ -8,6 +8,7 @@ import (
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"github.com/zgwit/iot-master/v3/pkg/db"
 	"jamma/types"
+	"strconv"
 )
 
 type loginObj struct {
@@ -42,7 +43,7 @@ func login(ctx *gin.Context) {
 	if !has {
 		//管理员自动创建
 		if obj.Username == "admin" {
-			user.Id = "admin"
+			user.Id = 0
 			user.Username = obj.Username
 			user.Name = "管理员"
 			_, err = db.Engine.InsertOne(&user)
@@ -72,7 +73,7 @@ func login(ctx *gin.Context) {
 	if !has {
 		dp := "123456"
 
-		password.Id = user.Id
+		password.Id = strconv.FormatInt(user.Id, 10)
 		password.Password = md5hash(dp)
 		_, err = db.Engine.InsertOne(&password)
 		if err != nil {

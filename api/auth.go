@@ -5,6 +5,7 @@ import (
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"github.com/zgwit/iot-master/v3/pkg/db"
 	"jamma/types"
+	"strconv"
 )
 
 func auth(ctx *gin.Context) {
@@ -47,7 +48,7 @@ func auth(ctx *gin.Context) {
 	}
 
 	//生成Token
-	token, err := jwtGenerate(user.Id)
+	token, err := jwtGenerate(strconv.FormatInt(user.Id, 10))
 	if err != nil {
 		return
 	}

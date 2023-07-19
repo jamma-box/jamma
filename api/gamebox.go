@@ -84,7 +84,6 @@ func noopDeviceUpdate() {}
 // @Router /device/{id}/delete [get]
 func noopDeviceDelete() {}
 
-
 func deviceRouter(app *gin.RouterGroup) {
 
 	app.POST("/count", curd.ApiCount[types.GameBox]())
@@ -98,7 +97,7 @@ func deviceRouter(app *gin.RouterGroup) {
 	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.GameBox]())
 
 	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.GameBox](nil, nil,
-		 "type", "name", "desc", "disabled"))
+		"type", "name", "desc", "img", "disabled"))
 
 	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.GameBox](nil, nil))
 
