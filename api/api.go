@@ -69,7 +69,7 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	router.POST("/login", login)
 
 	//检查 session，必须登录
-	//router.Use(mustLogin)
+	router.Use(mustLogin)
 
 	router.GET("/logout", logout)
 	router.POST("/password", password)

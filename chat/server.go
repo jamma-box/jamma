@@ -6,19 +6,26 @@ import (
 	socketio "github.com/googollee/go-socket.io"
 )
 
-func Register(router *gin.RouterGroup)  {
+var conw = make([]socketio.Conn, 0)
+
+func Register(router *gin.RouterGroup) {
 
 	server := socketio.NewServer(nil)
 
 	server.OnConnect("/", func(s socketio.Conn) error {
 		s.SetContext("")
+		conw = append(conw, s)
 		fmt.Println("connected:", s.ID())
 		return nil
 	})
 
 	server.OnEvent("/", "notice", func(s socketio.Conn, msg string) {
 		fmt.Println("notice:", msg)
-		s.Emit("reply", "have "+msg)
+		//群推所有在线人员
+		for _, val := range conw {
+			val.Emit("reply", "have "+msg)
+		}
+		//s.Emit("reply", "have "+msg)
 	})
 
 	server.OnEvent("/chat", "msg", func(s socketio.Conn, msg string) string {
@@ -40,7 +47,8 @@ func Register(router *gin.RouterGroup)  {
 	server.OnDisconnect("/", func(s socketio.Conn, reason string) {
 		fmt.Println("closed", reason)
 	})
-
+	//go server.Serve()
+	//	//defer server.Close()
 	router.Any("/*any", gin.WrapH(server))
 	//router.GET("/*any", gin.WrapH(server))
 	//router.POST("/*any", gin.WrapH(server))
