@@ -4,7 +4,7 @@ import "time"
 
 // User 用户
 type User struct {
-	Id           int64     `json:"id" xorm:"pk"`
+	Id           int64     `json:"id" xorm:"pk,autoincr"`
 	Username     string    `json:"username" xorm:"unique"`      //账号
 	Name         string    `json:"name,omitempty"`              //名称
 	Email        string    `json:"email,omitempty"`             //邮箱

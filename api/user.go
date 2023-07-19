@@ -134,7 +134,7 @@ func userRouter(app *gin.RouterGroup) {
 
 	app.GET("/list", curd.ApiList[types.User]())
 
-	app.POST("/create", curd.ParseParamId, curd.ApiCreateHook[types.User](curd.GenerateRandomIntId[types.User](6), nil))
+	app.POST("/create", curd.ParseParamId, curd.ApiCreateHook[types.User](nil, nil))
 
 	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.User]())
 
