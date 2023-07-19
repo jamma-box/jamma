@@ -85,6 +85,9 @@ func RegisterRoutes(router *gin.RouterGroup) {
 
 	gamehallRouter(router.Group("/hall"))
 
+	rechargeRouter(router.Group("/record/recharge"))
+	signRouter(router.Group("/record/sign"))
+
 	//TODO 报接口错误（以下代码不生效，路由好像不是树形处理）
 	router.Use(func(ctx *gin.Context) {
 		curd.Fail(ctx, "Not found")
