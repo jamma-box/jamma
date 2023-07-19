@@ -20,13 +20,13 @@ var wwwFiles embed.FS
 // @InstanceName jamma
 // @query.collection.format multi
 
-func main()  {
+func main() {
 
 	config.Load()
 
 	//原本的Main函数
 	engine := web.CreateEngine()
-
+	engine.Static("/static", "static")
 	//注册前端接口
 	api.RegisterRoutes(engine.Group("/api"))
 
