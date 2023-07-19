@@ -69,7 +69,7 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	router.POST("/login", login)
 
 	//检查 session，必须登录
-	router.Use(mustLogin)
+	//router.Use(mustLogin)
 
 	router.GET("/logout", logout)
 	router.POST("/password", password)
@@ -86,7 +86,12 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	gamehallRouter(router.Group("/hall"))
 
 	rechargeRouter(router.Group("/record/recharge"))
+
 	signRouter(router.Group("/record/sign"))
+
+	imgRouter(router.Group("/img"))
+
+	emailRouter(router.Group("/email"))
 
 	//TODO 报接口错误（以下代码不生效，路由好像不是树形处理）
 	router.Use(func(ctx *gin.Context) {
