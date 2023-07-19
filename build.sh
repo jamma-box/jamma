@@ -1,6 +1,6 @@
 
 #编译前端
-npm run build
+# npm run build
 
 # 整体编译
 go env -w GOPROXY=https://goproxy.cn,direct
@@ -23,7 +23,7 @@ ldflags="-X '${pkg}.Version=$gitTag' \
 export GOARCH=amd64
 
 export GOOS=windows
-go build -ldflags "$ldflags" -o jamma.exe cmd/main.go
+go build -ldflags "$ldflags" -o jamma.exe main.go
 
 export GOOS=linux
-go build -ldflags "$ldflags" -o jamma cmd/main.go
+go build -ldflags "$ldflags" -o jamma main.go
