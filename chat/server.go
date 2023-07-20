@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	socketio "github.com/googollee/go-socket.io"
+	"net/http"
 )
 
 var conw = make([]socketio.Conn, 0)
@@ -49,7 +50,18 @@ func Register(router *gin.RouterGroup) {
 	})
 	//go server.Serve()
 	//	//defer server.Close()
-	router.Any("/*any", gin.WrapH(server))
+	router.Any("/*any", func(c *gin.Context) {
+		method := c.Request.Method
+		c.Header("Access-Control-Allow-Origin", "*")
+		c.Header("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token, x-token")
+		c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PATCH, PUT")
+		c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
+		c.Header("Access-Control-Allow-Credentials", "true")
+		if method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusNoContent)
+		}
+		server.Serve()
+	})
 	//router.GET("/*any", gin.WrapH(server))
 	//router.POST("/*any", gin.WrapH(server))
 }
