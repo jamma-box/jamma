@@ -13,7 +13,7 @@ import (
 //go:embed all:www
 var wwwFiles embed.FS
 
-// @title 接口文档
+// @title jamma接口文档
 // @version 1.0 版本
 // @description API文档
 // @BasePath /api/
