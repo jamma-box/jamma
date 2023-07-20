@@ -14,10 +14,10 @@ import (
 // @Schemes
 // @Description 可以上传多个图片
 // @Tags project
-// @Param img body file true "图片"
+// @Param img body any true "图片"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyData[map[string]string] 返回图片信息
+// @Success 200 {object} ReplyData[any] 返回图片信息
 // @Router /img/upload [post]
 func noopImgUpload() {}
 
