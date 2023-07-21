@@ -15,7 +15,7 @@ import (
 // @Produce json
 // @Success 200 {object} ReplyData[int64] 返回游戏厅数量
 // @Router /hall/count [post]
-func noopGameHallCount() {}
+func noopGameCount() {}
 
 // @Summary 查询游戏厅
 // @Schemes
@@ -24,9 +24,9 @@ func noopGameHallCount() {}
 // @Param search body ParamSearch true "查询参数"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyList[types.GameHall] 返回游戏厅信息
+// @Success 200 {object} ReplyList[types.Game] 返回游戏厅信息
 // @Router /hall/search [post]
-func noopGameHallSearch() {}
+func noopGameSearch() {}
 
 // @Summary 查询游戏厅
 // @Schemes
@@ -35,20 +35,20 @@ func noopGameHallSearch() {}
 // @Param search query ParamList true "查询参数"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyList[types.GameHall] 返回游戏厅信息
+// @Success 200 {object} ReplyList[types.Game] 返回游戏厅信息
 // @Router /hall/list [get]
-func noopGameHallList() {}
+func noopGameList() {}
 
 // @Summary 创建游戏厅
 // @Schemes
 // @Description 创建游戏厅
 // @Tags device
-// @Param search body types.GameHall true "游戏厅信息"
+// @Param search body types.Game true "游戏厅信息"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyData[types.GameHall] 返回游戏厅信息
+// @Success 200 {object} ReplyData[types.Game] 返回游戏厅信息
 // @Router /hall/create [post]
-func noopGameHallCreate() {}
+func noopGameCreate() {}
 
 // @Summary 获取游戏厅
 // @Schemes
@@ -57,21 +57,21 @@ func noopGameHallCreate() {}
 // @Param id path int true "游戏厅ID"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyData[types.GameHall] 返回游戏厅信息
+// @Success 200 {object} ReplyData[types.Game] 返回游戏厅信息
 // @Router /hall/{id} [get]
-func noopGameHallGet() {}
+func noopGameGet() {}
 
 // @Summary 修改游戏厅
 // @Schemes
 // @Description 修改游戏厅
 // @Tags device
 // @Param id path int true "游戏厅ID"
-// @Param device body types.GameHall true "游戏厅信息"
+// @Param device body types.Game true "游戏厅信息"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyData[types.GameHall] 返回游戏厅信息
+// @Success 200 {object} ReplyData[types.Game] 返回游戏厅信息
 // @Router /hall/{id} [post]
-func noopGameHallUpdate() {}
+func noopGameUpdate() {}
 
 // @Summary 删除游戏厅
 // @Schemes
@@ -80,28 +80,28 @@ func noopGameHallUpdate() {}
 // @Param id path int true "游戏厅ID"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyData[types.GameHall] 返回游戏厅信息
+// @Success 200 {object} ReplyData[types.Game] 返回游戏厅信息
 // @Router /hall/{id}/delete [get]
-func noopGameHallDelete() {}
+func noopGameDelete() {}
 
 func gamehallRouter(app *gin.RouterGroup) {
 
-	app.POST("/count", curd.ApiCount[types.GameHall]())
+	app.POST("/count", curd.ApiCount[types.Game]())
 
-	app.POST("/search", curd.ApiSearch[types.GameHall]("id", "name", "disabled", "created"))
+	app.POST("/search", curd.ApiSearch[types.Game]("id", "name", "disabled", "created"))
 
-	app.GET("/list", curd.ApiList[types.GameHall]())
+	app.GET("/list", curd.ApiList[types.Game]())
 
-	app.POST("/create", curd.ApiCreateHook[types.GameHall](nil, nil))
+	app.POST("/create", curd.ApiCreateHook[types.Game](nil, nil))
 
-	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.GameHall]())
+	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Game]())
 
-	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.GameHall](nil, nil,
+	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.Game](nil, nil,
 		"name", "desc", "img", "disabled"))
 
-	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.GameHall](nil, nil))
+	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.Game](nil, nil))
 
-	app.GET(":id/disable", curd.ParseParamId, curd.ApiDisableHook[types.GameHall](true, nil, nil))
+	app.GET(":id/disable", curd.ParseParamId, curd.ApiDisableHook[types.Game](true, nil, nil))
 
-	app.GET(":id/enable", curd.ParseParamId, curd.ApiDisableHook[types.GameHall](false, nil, nil))
+	app.GET(":id/enable", curd.ParseParamId, curd.ApiDisableHook[types.Game](false, nil, nil))
 }

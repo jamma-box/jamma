@@ -15,7 +15,7 @@ import (
 // @Produce json
 // @Success 200 {object} ReplyData[int64] 返回游戏机数量
 // @Router /device/count [post]
-func noopDeviceCount() {}
+func noopBoxCount() {}
 
 // @Summary 查询游戏机
 // @Schemes
@@ -24,9 +24,9 @@ func noopDeviceCount() {}
 // @Param search body ParamSearch true "查询参数"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyList[types.GameBox] 返回游戏机信息
+// @Success 200 {object} ReplyList[types.Box] 返回游戏机信息
 // @Router /device/search [post]
-func noopDeviceSearch() {}
+func noopBoxSearch() {}
 
 // @Summary 查询游戏机
 // @Schemes
@@ -35,20 +35,20 @@ func noopDeviceSearch() {}
 // @Param search query ParamList true "查询参数"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyList[types.GameBox] 返回游戏机信息
+// @Success 200 {object} ReplyList[types.Box] 返回游戏机信息
 // @Router /device/list [get]
-func noopDeviceList() {}
+func noopBoxList() {}
 
 // @Summary 创建游戏机
 // @Schemes
 // @Description 创建游戏机
 // @Tags device
-// @Param search body types.GameBox true "游戏机信息"
+// @Param search body types.Box true "游戏机信息"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyData[types.GameBox] 返回游戏机信息
+// @Success 200 {object} ReplyData[types.Box] 返回游戏机信息
 // @Router /device/create [post]
-func noopDeviceCreate() {}
+func noopBoxCreate() {}
 
 // @Summary 获取游戏机
 // @Schemes
@@ -57,21 +57,21 @@ func noopDeviceCreate() {}
 // @Param id path int true "游戏机ID"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyData[types.GameBox] 返回游戏机信息
+// @Success 200 {object} ReplyData[types.Box] 返回游戏机信息
 // @Router /device/{id} [get]
-func noopDeviceGet() {}
+func noopBoxGet() {}
 
 // @Summary 修改游戏机
 // @Schemes
 // @Description 修改游戏机
 // @Tags device
 // @Param id path int true "游戏机ID"
-// @Param device body types.GameBox true "游戏机信息"
+// @Param device body types.Box true "游戏机信息"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyData[types.GameBox] 返回游戏机信息
+// @Success 200 {object} ReplyData[types.Box] 返回游戏机信息
 // @Router /device/{id} [post]
-func noopDeviceUpdate() {}
+func noopBoxUpdate() {}
 
 // @Summary 删除游戏机
 // @Schemes
@@ -80,28 +80,28 @@ func noopDeviceUpdate() {}
 // @Param id path int true "游戏机ID"
 // @Accept json
 // @Produce json
-// @Success 200 {object} ReplyData[types.GameBox] 返回游戏机信息
+// @Success 200 {object} ReplyData[types.Box] 返回游戏机信息
 // @Router /device/{id}/delete [get]
-func noopDeviceDelete() {}
+func noopBoxDelete() {}
 
-func deviceRouter(app *gin.RouterGroup) {
+func boxRouter(app *gin.RouterGroup) {
 
-	app.POST("/count", curd.ApiCount[types.GameBox]())
+	app.POST("/count", curd.ApiCount[types.Box]())
 
-	app.POST("/search", curd.ApiSearch[types.GameBox]("id", "name", "disabled", "created"))
+	app.POST("/search", curd.ApiSearch[types.Box]("id", "name", "disabled", "created"))
 
-	app.GET("/list", curd.ApiList[types.GameBox]())
+	app.GET("/list", curd.ApiList[types.Box]())
 
-	app.POST("/create", curd.ApiCreateHook[types.GameBox](nil, nil))
+	app.POST("/create", curd.ApiCreateHook[types.Box](nil, nil))
 
-	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.GameBox]())
+	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Box]())
 
-	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.GameBox](nil, nil,
+	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.Box](nil, nil,
 		"type", "name", "desc", "img", "disabled"))
 
-	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.GameBox](nil, nil))
+	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.Box](nil, nil))
 
-	app.GET(":id/disable", curd.ParseParamId, curd.ApiDisableHook[types.GameBox](true, nil, nil))
+	app.GET(":id/disable", curd.ParseParamId, curd.ApiDisableHook[types.Box](true, nil, nil))
 
-	app.GET(":id/enable", curd.ParseParamId, curd.ApiDisableHook[types.GameBox](false, nil, nil))
+	app.GET(":id/enable", curd.ParseParamId, curd.ApiDisableHook[types.Box](false, nil, nil))
 }

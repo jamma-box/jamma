@@ -2,7 +2,7 @@ package types
 
 import "time"
 
-type GameHall struct {
+type Game struct {
 	Id       int64     `json:"id,omitempty"`
 	Name     string    `json:"name,omitempty"`     //名称
 	Desc     string    `json:"desc,omitempty"`     //说明

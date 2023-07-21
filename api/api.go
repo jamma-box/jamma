@@ -77,13 +77,13 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	//注册子接口
 	userRouter(router.Group("/user"))
 
-	deviceRouter(router.Group("/device"))
+	boxRouter(router.Group("/box"))
 
 	backupRouter(router.Group("/backup"))
 
 	attachRouter(router.Group("/attach"))
 
-	gamehallRouter(router.Group("/hall"))
+	gamehallRouter(router.Group("/game"))
 
 	rechargeRouter(router.Group("/record/recharge"))
 
