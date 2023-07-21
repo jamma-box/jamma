@@ -84,7 +84,7 @@ func noopGameUpdate() {}
 // @Router /hall/{id}/delete [get]
 func noopGameDelete() {}
 
-func gamehallRouter(app *gin.RouterGroup) {
+func gameRouter(app *gin.RouterGroup) {
 
 	app.POST("/count", curd.ApiCount[types.Game]())
 

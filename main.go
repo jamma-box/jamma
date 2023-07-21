@@ -2,11 +2,14 @@ package main
 
 import (
 	"embed"
+	"github.com/zgwit/iot-master/v3/pkg/db"
+	"github.com/zgwit/iot-master/v3/pkg/log"
 	"github.com/zgwit/iot-master/v3/pkg/web"
 	"jamma/api"
 	"jamma/chat"
 	"jamma/config"
 	_ "jamma/docs"
+	"jamma/types"
 	"net/http"
 )
 
@@ -24,8 +27,19 @@ func main() {
 
 	config.Load()
 
+	err := db.Open()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	db.Engine.Sync2(new(types.Email), new(types.Game),
+		new(types.Box), new(types.Recharge),
+		new(types.SignIn), new(types.User),
+		new(types.Me), new(types.Password), new(types.UserHistory))
+
 	//原本的Main函数
 	engine := web.CreateEngine()
+	engine.Static("/static", "static")
 
 	//注册前端接口
 	api.RegisterRoutes(engine.Group("/api"))
@@ -38,7 +52,6 @@ func main() {
 
 	//附件
 	engine.Static("/attach", "attach")
-	engine.Static("/static", "static")
 	//注册静态页面
 	fs := engine.FileSystem()
 	fs.Put("", http.FS(wwwFiles), "www", "index.html")
