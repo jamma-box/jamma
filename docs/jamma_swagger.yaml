@@ -455,7 +455,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-types_Box'
       summary: 获取游戏机
       tags:
-      - device
+      - box
     post:
       consumes:
       - application/json
@@ -468,7 +468,7 @@ paths:
         type: integer
       - description: 游戏机信息
         in: body
-        name: device
+        name: box
         required: true
         schema:
           $ref: '#/definitions/types.Box'
@@ -481,7 +481,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-types_Box'
       summary: 修改游戏机
       tags:
-      - device
+      - box
   /box/{id}/delete:
     get:
       consumes:
@@ -502,7 +502,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-types_Box'
       summary: 删除游戏机
       tags:
-      - device
+      - box
   /box/count:
     post:
       consumes:
@@ -524,7 +524,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-int64'
       summary: 查询游戏机数量
       tags:
-      - device
+      - box
   /box/create:
     post:
       consumes:
@@ -546,7 +546,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-types_Box'
       summary: 创建游戏机
       tags:
-      - device
+      - box
   /box/list:
     get:
       consumes:
@@ -568,7 +568,7 @@ paths:
             $ref: '#/definitions/api.ReplyList-types_Box'
       summary: 查询游戏机
       tags:
-      - device
+      - box
   /box/search:
     post:
       consumes:
@@ -590,7 +590,7 @@ paths:
             $ref: '#/definitions/api.ReplyList-types_Box'
       summary: 查询游戏机
       tags:
-      - device
+      - box
   /hall/{id}:
     get:
       consumes:
@@ -611,7 +611,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-types_Game'
       summary: 获取游戏厅
       tags:
-      - device
+      - game
     post:
       consumes:
       - application/json
@@ -624,7 +624,7 @@ paths:
         type: integer
       - description: 游戏厅信息
         in: body
-        name: device
+        name: game
         required: true
         schema:
           $ref: '#/definitions/types.Game'
@@ -637,7 +637,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-types_Game'
       summary: 修改游戏厅
       tags:
-      - device
+      - game
   /hall/{id}/delete:
     get:
       consumes:
@@ -658,7 +658,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-types_Game'
       summary: 删除游戏厅
       tags:
-      - device
+      - game
   /hall/count:
     post:
       consumes:
@@ -680,7 +680,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-int64'
       summary: 查询游戏厅数量
       tags:
-      - device
+      - game
   /hall/create:
     post:
       consumes:
@@ -702,7 +702,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-types_Game'
       summary: 创建游戏厅
       tags:
-      - device
+      - game
   /hall/list:
     get:
       consumes:
@@ -724,7 +724,7 @@ paths:
             $ref: '#/definitions/api.ReplyList-types_Game'
       summary: 查询游戏厅
       tags:
-      - device
+      - game
   /hall/search:
     post:
       consumes:
@@ -746,7 +746,7 @@ paths:
             $ref: '#/definitions/api.ReplyList-types_Game'
       summary: 查询游戏厅
       tags:
-      - device
+      - game
   /img/upload:
     post:
       consumes:
@@ -768,7 +768,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-any'
       summary: 上传图片
       tags:
-      - project
+      - img
   /recharge/count:
     post:
       consumes:
@@ -790,7 +790,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-int64'
       summary: 查询重置记录数量
       tags:
-      - device
+      - recharge
   /recharge/create:
     post:
       consumes:
@@ -812,7 +812,7 @@ paths:
             $ref: '#/definitions/api.ReplyData-types_Recharge'
       summary: 创建重置记录
       tags:
-      - device
+      - recharge
   /recharge/list:
     get:
       consumes:
@@ -834,7 +834,7 @@ paths:
             $ref: '#/definitions/api.ReplyList-types_Recharge'
       summary: 查询重置记录
       tags:
-      - device
+      - recharge
   /recharge/search:
     post:
       consumes:
@@ -856,7 +856,7 @@ paths:
             $ref: '#/definitions/api.ReplyList-types_Recharge'
       summary: 查询重置记录
       tags:
-      - device
+      - recharge
   /user/{id}:
     get:
       consumes:

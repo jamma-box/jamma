@@ -9,7 +9,7 @@ import (
 // @Summary 查询签到记录数量
 // @Schemes
 // @Description 查询签到记录数量
-// @Tags device
+// @Tags signin
 // @Param search body ParamSearch true "查询参数"
 // @Accept json
 // @Produce json
@@ -20,7 +20,7 @@ func noopSignInCount() {}
 // @Summary 查询签到记录
 // @Schemes
 // @Description 查询签到记录
-// @Tags device
+// @Tags signin
 // @Param search body ParamSearch true "查询参数"
 // @Accept json
 // @Produce json
@@ -31,7 +31,7 @@ func noopSignInSearch() {}
 // @Summary 查询签到记录
 // @Schemes
 // @Description 查询签到记录
-// @Tags device
+// @Tags signin
 // @Param search query ParamList true "查询参数"
 // @Accept json
 // @Produce json
@@ -42,7 +42,7 @@ func noopSignInList() {}
 // @Summary 创建签到记录
 // @Schemes
 // @Description 创建签到记录
-// @Tags device
+// @Tags signin
 // @Param search body types.SignIn true "签到记录信息"
 // @Accept json
 // @Produce json
@@ -53,7 +53,7 @@ func noopSignInCreate() {}
 // @Summary 获取签到记录
 // @Schemes
 // @Description 获取签到记录
-// @Tags device
+// @Tags signin
 // @Param id path int true "签到记录ID"
 // @Accept json
 // @Produce json

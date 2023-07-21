@@ -9,7 +9,7 @@ import (
 // @Summary 查询重置记录数量
 // @Schemes
 // @Description 查询重置记录数量
-// @Tags device
+// @Tags recharge
 // @Param search body ParamSearch true "查询参数"
 // @Accept json
 // @Produce json
@@ -20,7 +20,7 @@ func noopRechargeCount() {}
 // @Summary 查询重置记录
 // @Schemes
 // @Description 查询重置记录
-// @Tags device
+// @Tags recharge
 // @Param search body ParamSearch true "查询参数"
 // @Accept json
 // @Produce json
@@ -31,7 +31,7 @@ func noopRechargeSearch() {}
 // @Summary 查询重置记录
 // @Schemes
 // @Description 查询重置记录
-// @Tags device
+// @Tags recharge
 // @Param search query ParamList true "查询参数"
 // @Accept json
 // @Produce json
@@ -42,7 +42,7 @@ func noopRechargeList() {}
 // @Summary 创建重置记录
 // @Schemes
 // @Description 创建重置记录
-// @Tags device
+// @Tags recharge
 // @Param search body types.Recharge true "重置记录信息"
 // @Accept json
 // @Produce json
@@ -53,7 +53,7 @@ func noopRechargeCreate() {}
 // @Summary 获取重置记录
 // @Schemes
 // @Description 获取重置记录
-// @Tags device
+// @Tags recharge
 // @Param id path int true "重置记录ID"
 // @Accept json
 // @Produce json

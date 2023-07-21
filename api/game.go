@@ -9,7 +9,7 @@ import (
 // @Summary 查询游戏厅数量
 // @Schemes
 // @Description 查询游戏厅数量
-// @Tags device
+// @Tags game
 // @Param search body ParamSearch true "查询参数"
 // @Accept json
 // @Produce json
@@ -20,7 +20,7 @@ func noopGameCount() {}
 // @Summary 查询游戏厅
 // @Schemes
 // @Description 查询游戏厅
-// @Tags device
+// @Tags game
 // @Param search body ParamSearch true "查询参数"
 // @Accept json
 // @Produce json
@@ -31,7 +31,7 @@ func noopGameSearch() {}
 // @Summary 查询游戏厅
 // @Schemes
 // @Description 查询游戏厅
-// @Tags device
+// @Tags game
 // @Param search query ParamList true "查询参数"
 // @Accept json
 // @Produce json
@@ -42,7 +42,7 @@ func noopGameList() {}
 // @Summary 创建游戏厅
 // @Schemes
 // @Description 创建游戏厅
-// @Tags device
+// @Tags game
 // @Param search body types.Game true "游戏厅信息"
 // @Accept json
 // @Produce json
@@ -53,7 +53,7 @@ func noopGameCreate() {}
 // @Summary 获取游戏厅
 // @Schemes
 // @Description 获取游戏厅
-// @Tags device
+// @Tags game
 // @Param id path int true "游戏厅ID"
 // @Accept json
 // @Produce json
@@ -64,9 +64,9 @@ func noopGameGet() {}
 // @Summary 修改游戏厅
 // @Schemes
 // @Description 修改游戏厅
-// @Tags device
+// @Tags game
 // @Param id path int true "游戏厅ID"
-// @Param device body types.Game true "游戏厅信息"
+// @Param game body types.Game true "游戏厅信息"
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.Game] 返回游戏厅信息
@@ -76,7 +76,7 @@ func noopGameUpdate() {}
 // @Summary 删除游戏厅
 // @Schemes
 // @Description 删除游戏厅
-// @Tags device
+// @Tags game
 // @Param id path int true "游戏厅ID"
 // @Accept json
 // @Produce json

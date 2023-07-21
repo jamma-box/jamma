@@ -289,7 +289,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "box"
                 ],
                 "summary": "查询游戏机数量",
                 "parameters": [
@@ -323,7 +323,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "box"
                 ],
                 "summary": "创建游戏机",
                 "parameters": [
@@ -357,7 +357,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "box"
                 ],
                 "summary": "查询游戏机",
                 "parameters": [
@@ -392,7 +392,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "box"
                 ],
                 "summary": "查询游戏机",
                 "parameters": [
@@ -426,7 +426,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "box"
                 ],
                 "summary": "获取游戏机",
                 "parameters": [
@@ -456,7 +456,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "box"
                 ],
                 "summary": "修改游戏机",
                 "parameters": [
@@ -469,7 +469,7 @@ const docTemplatejamma = `{
                     },
                     {
                         "description": "游戏机信息",
-                        "name": "device",
+                        "name": "box",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -497,7 +497,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "box"
                 ],
                 "summary": "删除游戏机",
                 "parameters": [
@@ -529,7 +529,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "game"
                 ],
                 "summary": "查询游戏厅数量",
                 "parameters": [
@@ -563,7 +563,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "game"
                 ],
                 "summary": "创建游戏厅",
                 "parameters": [
@@ -597,7 +597,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "game"
                 ],
                 "summary": "查询游戏厅",
                 "parameters": [
@@ -632,7 +632,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "game"
                 ],
                 "summary": "查询游戏厅",
                 "parameters": [
@@ -666,7 +666,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "game"
                 ],
                 "summary": "获取游戏厅",
                 "parameters": [
@@ -696,7 +696,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "game"
                 ],
                 "summary": "修改游戏厅",
                 "parameters": [
@@ -709,7 +709,7 @@ const docTemplatejamma = `{
                     },
                     {
                         "description": "游戏厅信息",
-                        "name": "device",
+                        "name": "game",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -737,7 +737,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "game"
                 ],
                 "summary": "删除游戏厅",
                 "parameters": [
@@ -769,7 +769,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "project"
+                    "img"
                 ],
                 "summary": "上传图片",
                 "parameters": [
@@ -803,7 +803,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "recharge"
                 ],
                 "summary": "查询重置记录数量",
                 "parameters": [
@@ -837,7 +837,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "recharge"
                 ],
                 "summary": "创建重置记录",
                 "parameters": [
@@ -871,7 +871,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "recharge"
                 ],
                 "summary": "查询重置记录",
                 "parameters": [
@@ -906,7 +906,7 @@ const docTemplatejamma = `{
                     "application/json"
                 ],
                 "tags": [
-                    "device"
+                    "recharge"
                 ],
                 "summary": "查询重置记录",
                 "parameters": [

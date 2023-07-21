@@ -9,7 +9,7 @@ import (
 // @Summary 查询游戏机数量
 // @Schemes
 // @Description 查询游戏机数量
-// @Tags device
+// @Tags box
 // @Param search body ParamSearch true "查询参数"
 // @Accept json
 // @Produce json
@@ -20,7 +20,7 @@ func noopBoxCount() {}
 // @Summary 查询游戏机
 // @Schemes
 // @Description 查询游戏机
-// @Tags device
+// @Tags box
 // @Param search body ParamSearch true "查询参数"
 // @Accept json
 // @Produce json
@@ -31,7 +31,7 @@ func noopBoxSearch() {}
 // @Summary 查询游戏机
 // @Schemes
 // @Description 查询游戏机
-// @Tags device
+// @Tags box
 // @Param search query ParamList true "查询参数"
 // @Accept json
 // @Produce json
@@ -42,7 +42,7 @@ func noopBoxList() {}
 // @Summary 创建游戏机
 // @Schemes
 // @Description 创建游戏机
-// @Tags device
+// @Tags box
 // @Param search body types.Box true "游戏机信息"
 // @Accept json
 // @Produce json
@@ -53,7 +53,7 @@ func noopBoxCreate() {}
 // @Summary 获取游戏机
 // @Schemes
 // @Description 获取游戏机
-// @Tags device
+// @Tags box
 // @Param id path int true "游戏机ID"
 // @Accept json
 // @Produce json
@@ -64,9 +64,9 @@ func noopBoxGet() {}
 // @Summary 修改游戏机
 // @Schemes
 // @Description 修改游戏机
-// @Tags device
+// @Tags box
 // @Param id path int true "游戏机ID"
-// @Param device body types.Box true "游戏机信息"
+// @Param box body types.Box true "游戏机信息"
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.Box] 返回游戏机信息
@@ -76,7 +76,7 @@ func noopBoxUpdate() {}
 // @Summary 删除游戏机
 // @Schemes
 // @Description 删除游戏机
-// @Tags device
+// @Tags box
 // @Param id path int true "游戏机ID"
 // @Accept json
 // @Produce json

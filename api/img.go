@@ -13,7 +13,7 @@ import (
 // @Summary 上传图片
 // @Schemes
 // @Description 可以上传多个图片
-// @Tags project
+// @Tags img
 // @Param img body any true "图片"
 // @Accept json
 // @Produce json
