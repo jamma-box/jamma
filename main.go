@@ -26,7 +26,7 @@ func main() {
 
 	//原本的Main函数
 	engine := web.CreateEngine()
-	engine.Static("/static", "static")
+
 	//注册前端接口
 	api.RegisterRoutes(engine.Group("/api"))
 
@@ -38,7 +38,7 @@ func main() {
 
 	//附件
 	engine.Static("/attach", "attach")
-
+	engine.Static("/static", "static")
 	//注册静态页面
 	fs := engine.FileSystem()
 	fs.Put("", http.FS(wwwFiles), "www", "index.html")

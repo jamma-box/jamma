@@ -14,7 +14,7 @@ import (
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[int64] 返回游戏机数量
-// @Router /device/count [post]
+// @Router /box/count [post]
 func noopBoxCount() {}
 
 // @Summary 查询游戏机
@@ -25,7 +25,7 @@ func noopBoxCount() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyList[types.Box] 返回游戏机信息
-// @Router /device/search [post]
+// @Router /box/search [post]
 func noopBoxSearch() {}
 
 // @Summary 查询游戏机
@@ -36,7 +36,7 @@ func noopBoxSearch() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyList[types.Box] 返回游戏机信息
-// @Router /device/list [get]
+// @Router /box/list [get]
 func noopBoxList() {}
 
 // @Summary 创建游戏机
@@ -47,7 +47,7 @@ func noopBoxList() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.Box] 返回游戏机信息
-// @Router /device/create [post]
+// @Router /box/create [post]
 func noopBoxCreate() {}
 
 // @Summary 获取游戏机
@@ -58,7 +58,7 @@ func noopBoxCreate() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.Box] 返回游戏机信息
-// @Router /device/{id} [get]
+// @Router /box/{id} [get]
 func noopBoxGet() {}
 
 // @Summary 修改游戏机
@@ -70,7 +70,7 @@ func noopBoxGet() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.Box] 返回游戏机信息
-// @Router /device/{id} [post]
+// @Router /box/{id} [post]
 func noopBoxUpdate() {}
 
 // @Summary 删除游戏机
@@ -81,7 +81,7 @@ func noopBoxUpdate() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.Box] 返回游戏机信息
-// @Router /device/{id}/delete [get]
+// @Router /box/{id}/delete [get]
 func noopBoxDelete() {}
 
 func boxRouter(app *gin.RouterGroup) {
@@ -97,7 +97,7 @@ func boxRouter(app *gin.RouterGroup) {
 	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Box]())
 
 	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.Box](nil, nil,
-		"type", "name", "desc", "img", "disabled"))
+		"type", "name", "desc", "icon", "disabled"))
 
 	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.Box](nil, nil))
 

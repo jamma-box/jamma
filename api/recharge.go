@@ -14,7 +14,7 @@ import (
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[int64] 返回重置记录数量
-// @Router /record/recharge/count [post]
+// @Router /recharge/count [post]
 func noopRechargeCount() {}
 
 // @Summary 查询重置记录
@@ -25,7 +25,7 @@ func noopRechargeCount() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyList[types.Recharge] 返回重置记录信息
-// @Router /record/recharge/search [post]
+// @Router /recharge/search [post]
 func noopRechargeSearch() {}
 
 // @Summary 查询重置记录
@@ -36,7 +36,7 @@ func noopRechargeSearch() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyList[types.Recharge] 返回重置记录信息
-// @Router /record/recharge/list [get]
+// @Router /recharge/list [get]
 func noopRechargeList() {}
 
 // @Summary 创建重置记录
@@ -47,7 +47,7 @@ func noopRechargeList() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.Recharge] 返回重置记录信息
-// @Router /record/recharge/create [post]
+// @Router /recharge/create [post]
 func noopRechargeCreate() {}
 
 // @Summary 获取重置记录
@@ -58,7 +58,8 @@ func noopRechargeCreate() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.Recharge] 返回重置记录信息
-// @Router /record/recharge/{id} [get]
+// @Router /recharge/{id} [get]
+
 func noopRechargeGet() {}
 func rechargeRouter(app *gin.RouterGroup) {
 	app.POST("/count", curd.ApiCount[types.Recharge]())

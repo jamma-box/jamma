@@ -85,9 +85,9 @@ func RegisterRoutes(router *gin.RouterGroup) {
 
 	gamehallRouter(router.Group("/game"))
 
-	rechargeRouter(router.Group("/record/recharge"))
+	rechargeRouter(router.Group("/recharge"))
 
-	signRouter(router.Group("/record/sign"))
+	signRouter(router.Group("/sign"))
 
 	imgRouter(router.Group("/img"))
 

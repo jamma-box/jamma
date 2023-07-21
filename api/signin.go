@@ -14,7 +14,7 @@ import (
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[int64] 返回签到记录数量
-// @Router /record/signin/count [post]
+// @Router/signin/count [post]
 func noopSignInCount() {}
 
 // @Summary 查询签到记录
@@ -25,7 +25,7 @@ func noopSignInCount() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyList[types.SignIn] 返回签到记录信息
-// @Router /record/signin/search [post]
+// @Router/signin/search [post]
 func noopSignInSearch() {}
 
 // @Summary 查询签到记录
@@ -36,7 +36,7 @@ func noopSignInSearch() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyList[types.SignIn] 返回签到记录信息
-// @Router /record/signin/list [get]
+// @Router/signin/list [get]
 func noopSignInList() {}
 
 // @Summary 创建签到记录
@@ -47,7 +47,7 @@ func noopSignInList() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.SignIn] 返回签到记录信息
-// @Router /record/signin/create [post]
+// @Router/signin/create [post]
 func noopSignInCreate() {}
 
 // @Summary 获取签到记录
@@ -58,7 +58,8 @@ func noopSignInCreate() {}
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.SignIn] 返回签到记录信息
-// @Router /record/signin/{id} [get]
+// @Router/signin/{id} [get]
+
 func noopSignInGet() {}
 
 func signRouter(app *gin.RouterGroup) {

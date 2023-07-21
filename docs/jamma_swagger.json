@@ -271,7 +271,7 @@
                 }
             }
         },
-        "/device/count": {
+        "/box/count": {
             "post": {
                 "description": "查询游戏机数量",
                 "consumes": [
@@ -305,7 +305,7 @@
                 }
             }
         },
-        "/device/create": {
+        "/box/create": {
             "post": {
                 "description": "创建游戏机",
                 "consumes": [
@@ -325,7 +325,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.GameBox"
+                            "$ref": "#/definitions/types.Box"
                         }
                     }
                 ],
@@ -333,13 +333,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameBox"
+                            "$ref": "#/definitions/api.ReplyData-types_Box"
                         }
                     }
                 }
             }
         },
-        "/device/list": {
+        "/box/list": {
             "get": {
                 "description": "查询游戏机",
                 "consumes": [
@@ -368,13 +368,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyList-types_GameBox"
+                            "$ref": "#/definitions/api.ReplyList-types_Box"
                         }
                     }
                 }
             }
         },
-        "/device/search": {
+        "/box/search": {
             "post": {
                 "description": "查询游戏机",
                 "consumes": [
@@ -402,13 +402,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyList-types_GameBox"
+                            "$ref": "#/definitions/api.ReplyList-types_Box"
                         }
                     }
                 }
             }
         },
-        "/device/{id}": {
+        "/box/{id}": {
             "get": {
                 "description": "获取游戏机",
                 "consumes": [
@@ -434,7 +434,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameBox"
+                            "$ref": "#/definitions/api.ReplyData-types_Box"
                         }
                     }
                 }
@@ -465,7 +465,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.GameBox"
+                            "$ref": "#/definitions/types.Box"
                         }
                     }
                 ],
@@ -473,13 +473,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameBox"
+                            "$ref": "#/definitions/api.ReplyData-types_Box"
                         }
                     }
                 }
             }
         },
-        "/device/{id}/delete": {
+        "/box/{id}/delete": {
             "get": {
                 "description": "删除游戏机",
                 "consumes": [
@@ -505,7 +505,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameBox"
+                            "$ref": "#/definitions/api.ReplyData-types_Box"
                         }
                     }
                 }
@@ -565,7 +565,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.GameHall"
+                            "$ref": "#/definitions/types.Game"
                         }
                     }
                 ],
@@ -573,7 +573,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameHall"
+                            "$ref": "#/definitions/api.ReplyData-types_Game"
                         }
                     }
                 }
@@ -608,7 +608,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyList-types_GameHall"
+                            "$ref": "#/definitions/api.ReplyList-types_Game"
                         }
                     }
                 }
@@ -642,7 +642,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyList-types_GameHall"
+                            "$ref": "#/definitions/api.ReplyList-types_Game"
                         }
                     }
                 }
@@ -674,7 +674,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameHall"
+                            "$ref": "#/definitions/api.ReplyData-types_Game"
                         }
                     }
                 }
@@ -705,7 +705,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.GameHall"
+                            "$ref": "#/definitions/types.Game"
                         }
                     }
                 ],
@@ -713,7 +713,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameHall"
+                            "$ref": "#/definitions/api.ReplyData-types_Game"
                         }
                     }
                 }
@@ -745,7 +745,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameHall"
+                            "$ref": "#/definitions/api.ReplyData-types_Game"
                         }
                     }
                 }
@@ -785,7 +785,7 @@
                 }
             }
         },
-        "/record/recharge/count": {
+        "/recharge/count": {
             "post": {
                 "description": "查询重置记录数量",
                 "consumes": [
@@ -819,7 +819,7 @@
                 }
             }
         },
-        "/record/recharge/create": {
+        "/recharge/create": {
             "post": {
                 "description": "创建重置记录",
                 "consumes": [
@@ -853,7 +853,7 @@
                 }
             }
         },
-        "/record/recharge/list": {
+        "/recharge/list": {
             "get": {
                 "description": "查询重置记录",
                 "consumes": [
@@ -888,7 +888,7 @@
                 }
             }
         },
-        "/record/recharge/search": {
+        "/recharge/search": {
             "post": {
                 "description": "查询重置记录",
                 "consumes": [
@@ -917,207 +917,6 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/api.ReplyList-types_Recharge"
-                        }
-                    }
-                }
-            }
-        },
-        "/record/recharge/{id}": {
-            "get": {
-                "description": "获取重置记录",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "device"
-                ],
-                "summary": "获取重置记录",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "重置记录ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_Recharge"
-                        }
-                    }
-                }
-            }
-        },
-        "/record/signin/count": {
-            "post": {
-                "description": "查询签到记录数量",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "device"
-                ],
-                "summary": "查询签到记录数量",
-                "parameters": [
-                    {
-                        "description": "查询参数",
-                        "name": "search",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/api.ParamSearch"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.ReplyData-int64"
-                        }
-                    }
-                }
-            }
-        },
-        "/record/signin/create": {
-            "post": {
-                "description": "创建签到记录",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "device"
-                ],
-                "summary": "创建签到记录",
-                "parameters": [
-                    {
-                        "description": "签到记录信息",
-                        "name": "search",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/types.SignIn"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_SignIn"
-                        }
-                    }
-                }
-            }
-        },
-        "/record/signin/list": {
-            "get": {
-                "description": "查询签到记录",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "device"
-                ],
-                "summary": "查询签到记录",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "skip",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.ReplyList-types_SignIn"
-                        }
-                    }
-                }
-            }
-        },
-        "/record/signin/search": {
-            "post": {
-                "description": "查询签到记录",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "device"
-                ],
-                "summary": "查询签到记录",
-                "parameters": [
-                    {
-                        "description": "查询参数",
-                        "name": "search",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/api.ParamSearch"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.ReplyList-types_SignIn"
-                        }
-                    }
-                }
-            }
-        },
-        "/record/signin/{id}": {
-            "get": {
-                "description": "获取签到记录",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "device"
-                ],
-                "summary": "获取签到记录",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "签到记录ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_SignIn"
                         }
                     }
                 }
@@ -1519,22 +1318,22 @@
                 }
             }
         },
-        "api.ReplyData-types_GameBox": {
+        "api.ReplyData-types_Box": {
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/types.GameBox"
+                    "$ref": "#/definitions/types.Box"
                 },
                 "error": {
                     "type": "string"
                 }
             }
         },
-        "api.ReplyData-types_GameHall": {
+        "api.ReplyData-types_Game": {
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/types.GameHall"
+                    "$ref": "#/definitions/types.Game"
                 },
                 "error": {
                     "type": "string"
@@ -1591,13 +1390,13 @@
                 }
             }
         },
-        "api.ReplyList-types_GameBox": {
+        "api.ReplyList-types_Box": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/types.GameBox"
+                        "$ref": "#/definitions/types.Box"
                     }
                 },
                 "error": {
@@ -1608,13 +1407,13 @@
                 }
             }
         },
-        "api.ReplyList-types_GameHall": {
+        "api.ReplyList-types_Game": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/types.GameHall"
+                        "$ref": "#/definitions/types.Game"
                     }
                 },
                 "error": {
@@ -1712,7 +1511,7 @@
                 }
             }
         },
-        "types.GameBox": {
+        "types.Box": {
             "type": "object",
             "properties": {
                 "created": {
@@ -1726,12 +1525,12 @@
                     "description": "禁用",
                     "type": "boolean"
                 },
-                "id": {
-                    "type": "integer"
-                },
-                "img": {
+                "icon": {
                     "description": "图片",
                     "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "name": {
                     "description": "名称",
@@ -1743,7 +1542,7 @@
                 }
             }
         },
-        "types.GameHall": {
+        "types.Game": {
             "type": "object",
             "properties": {
                 "created": {
@@ -1757,15 +1556,19 @@
                     "description": "禁用",
                     "type": "boolean"
                 },
-                "id": {
-                    "type": "integer"
-                },
-                "img": {
+                "icon": {
                     "description": "图片",
                     "type": "string"
                 },
+                "id": {
+                    "type": "integer"
+                },
                 "name": {
                     "description": "名称",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "类型",
                     "type": "string"
                 }
             }

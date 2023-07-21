@@ -31,17 +31,17 @@ definitions:
       error:
         type: string
     type: object
-  api.ReplyData-types_GameBox:
+  api.ReplyData-types_Box:
     properties:
       data:
-        $ref: '#/definitions/types.GameBox'
+        $ref: '#/definitions/types.Box'
       error:
         type: string
     type: object
-  api.ReplyData-types_GameHall:
+  api.ReplyData-types_Game:
     properties:
       data:
-        $ref: '#/definitions/types.GameHall'
+        $ref: '#/definitions/types.Game'
       error:
         type: string
     type: object
@@ -77,22 +77,22 @@ definitions:
       total:
         type: integer
     type: object
-  api.ReplyList-types_GameBox:
+  api.ReplyList-types_Box:
     properties:
       data:
         items:
-          $ref: '#/definitions/types.GameBox'
+          $ref: '#/definitions/types.Box'
         type: array
       error:
         type: string
       total:
         type: integer
     type: object
-  api.ReplyList-types_GameHall:
+  api.ReplyList-types_Game:
     properties:
       data:
         items:
-          $ref: '#/definitions/types.GameHall'
+          $ref: '#/definitions/types.Game'
         type: array
       error:
         type: string
@@ -155,7 +155,7 @@ definitions:
       name:
         type: string
     type: object
-  types.GameBox:
+  types.Box:
     properties:
       created:
         type: string
@@ -165,11 +165,11 @@ definitions:
       disabled:
         description: 禁用
         type: boolean
-      id:
-        type: integer
-      img:
+      icon:
         description: 图片
         type: string
+      id:
+        type: integer
       name:
         description: 名称
         type: string
@@ -177,7 +177,7 @@ definitions:
         description: 类型
         type: string
     type: object
-  types.GameHall:
+  types.Game:
     properties:
       created:
         type: string
@@ -187,13 +187,16 @@ definitions:
       disabled:
         description: 禁用
         type: boolean
-      id:
-        type: integer
-      img:
+      icon:
         description: 图片
         type: string
+      id:
+        type: integer
       name:
         description: 名称
+        type: string
+      type:
+        description: 类型
         type: string
     type: object
   types.Recharge:
@@ -432,7 +435,7 @@ paths:
       summary: 导入所有数据
       tags:
       - backup
-  /device/{id}:
+  /box/{id}:
     get:
       consumes:
       - application/json
@@ -449,7 +452,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ReplyData-types_GameBox'
+            $ref: '#/definitions/api.ReplyData-types_Box'
       summary: 获取游戏机
       tags:
       - device
@@ -468,18 +471,18 @@ paths:
         name: device
         required: true
         schema:
-          $ref: '#/definitions/types.GameBox'
+          $ref: '#/definitions/types.Box'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ReplyData-types_GameBox'
+            $ref: '#/definitions/api.ReplyData-types_Box'
       summary: 修改游戏机
       tags:
       - device
-  /device/{id}/delete:
+  /box/{id}/delete:
     get:
       consumes:
       - application/json
@@ -496,11 +499,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ReplyData-types_GameBox'
+            $ref: '#/definitions/api.ReplyData-types_Box'
       summary: 删除游戏机
       tags:
       - device
-  /device/count:
+  /box/count:
     post:
       consumes:
       - application/json
@@ -522,7 +525,7 @@ paths:
       summary: 查询游戏机数量
       tags:
       - device
-  /device/create:
+  /box/create:
     post:
       consumes:
       - application/json
@@ -533,18 +536,18 @@ paths:
         name: search
         required: true
         schema:
-          $ref: '#/definitions/types.GameBox'
+          $ref: '#/definitions/types.Box'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ReplyData-types_GameBox'
+            $ref: '#/definitions/api.ReplyData-types_Box'
       summary: 创建游戏机
       tags:
       - device
-  /device/list:
+  /box/list:
     get:
       consumes:
       - application/json
@@ -562,11 +565,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ReplyList-types_GameBox'
+            $ref: '#/definitions/api.ReplyList-types_Box'
       summary: 查询游戏机
       tags:
       - device
-  /device/search:
+  /box/search:
     post:
       consumes:
       - application/json
@@ -584,7 +587,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ReplyList-types_GameBox'
+            $ref: '#/definitions/api.ReplyList-types_Box'
       summary: 查询游戏机
       tags:
       - device
@@ -605,7 +608,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ReplyData-types_GameHall'
+            $ref: '#/definitions/api.ReplyData-types_Game'
       summary: 获取游戏厅
       tags:
       - device
@@ -624,14 +627,14 @@ paths:
         name: device
         required: true
         schema:
-          $ref: '#/definitions/types.GameHall'
+          $ref: '#/definitions/types.Game'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ReplyData-types_GameHall'
+            $ref: '#/definitions/api.ReplyData-types_Game'
       summary: 修改游戏厅
       tags:
       - device
@@ -652,7 +655,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ReplyData-types_GameHall'
+            $ref: '#/definitions/api.ReplyData-types_Game'
       summary: 删除游戏厅
       tags:
       - device
@@ -689,14 +692,14 @@ paths:
         name: search
         required: true
         schema:
-          $ref: '#/definitions/types.GameHall'
+          $ref: '#/definitions/types.Game'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ReplyData-types_GameHall'
+            $ref: '#/definitions/api.ReplyData-types_Game'
       summary: 创建游戏厅
       tags:
       - device
@@ -718,7 +721,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ReplyList-types_GameHall'
+            $ref: '#/definitions/api.ReplyList-types_Game'
       summary: 查询游戏厅
       tags:
       - device
@@ -740,7 +743,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.ReplyList-types_GameHall'
+            $ref: '#/definitions/api.ReplyList-types_Game'
       summary: 查询游戏厅
       tags:
       - device
@@ -766,28 +769,7 @@ paths:
       summary: 上传图片
       tags:
       - project
-  /record/recharge/{id}:
-    get:
-      consumes:
-      - application/json
-      description: 获取重置记录
-      parameters:
-      - description: 重置记录ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/api.ReplyData-types_Recharge'
-      summary: 获取重置记录
-      tags:
-      - device
-  /record/recharge/count:
+  /recharge/count:
     post:
       consumes:
       - application/json
@@ -809,7 +791,7 @@ paths:
       summary: 查询重置记录数量
       tags:
       - device
-  /record/recharge/create:
+  /recharge/create:
     post:
       consumes:
       - application/json
@@ -831,7 +813,7 @@ paths:
       summary: 创建重置记录
       tags:
       - device
-  /record/recharge/list:
+  /recharge/list:
     get:
       consumes:
       - application/json
@@ -853,7 +835,7 @@ paths:
       summary: 查询重置记录
       tags:
       - device
-  /record/recharge/search:
+  /recharge/search:
     post:
       consumes:
       - application/json
@@ -873,115 +855,6 @@ paths:
           schema:
             $ref: '#/definitions/api.ReplyList-types_Recharge'
       summary: 查询重置记录
-      tags:
-      - device
-  /record/signin/{id}:
-    get:
-      consumes:
-      - application/json
-      description: 获取签到记录
-      parameters:
-      - description: 签到记录ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/api.ReplyData-types_SignIn'
-      summary: 获取签到记录
-      tags:
-      - device
-  /record/signin/count:
-    post:
-      consumes:
-      - application/json
-      description: 查询签到记录数量
-      parameters:
-      - description: 查询参数
-        in: body
-        name: search
-        required: true
-        schema:
-          $ref: '#/definitions/api.ParamSearch'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/api.ReplyData-int64'
-      summary: 查询签到记录数量
-      tags:
-      - device
-  /record/signin/create:
-    post:
-      consumes:
-      - application/json
-      description: 创建签到记录
-      parameters:
-      - description: 签到记录信息
-        in: body
-        name: search
-        required: true
-        schema:
-          $ref: '#/definitions/types.SignIn'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/api.ReplyData-types_SignIn'
-      summary: 创建签到记录
-      tags:
-      - device
-  /record/signin/list:
-    get:
-      consumes:
-      - application/json
-      description: 查询签到记录
-      parameters:
-      - in: query
-        name: limit
-        type: integer
-      - in: query
-        name: skip
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/api.ReplyList-types_SignIn'
-      summary: 查询签到记录
-      tags:
-      - device
-  /record/signin/search:
-    post:
-      consumes:
-      - application/json
-      description: 查询签到记录
-      parameters:
-      - description: 查询参数
-        in: body
-        name: search
-        required: true
-        schema:
-          $ref: '#/definitions/api.ParamSearch'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/api.ReplyList-types_SignIn'
-      summary: 查询签到记录
       tags:
       - device
   /user/{id}:

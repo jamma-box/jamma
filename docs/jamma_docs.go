@@ -279,7 +279,7 @@ const docTemplatejamma = `{
                 }
             }
         },
-        "/device/count": {
+        "/box/count": {
             "post": {
                 "description": "查询游戏机数量",
                 "consumes": [
@@ -313,7 +313,7 @@ const docTemplatejamma = `{
                 }
             }
         },
-        "/device/create": {
+        "/box/create": {
             "post": {
                 "description": "创建游戏机",
                 "consumes": [
@@ -333,7 +333,7 @@ const docTemplatejamma = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.GameBox"
+                            "$ref": "#/definitions/types.Box"
                         }
                     }
                 ],
@@ -341,13 +341,13 @@ const docTemplatejamma = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameBox"
+                            "$ref": "#/definitions/api.ReplyData-types_Box"
                         }
                     }
                 }
             }
         },
-        "/device/list": {
+        "/box/list": {
             "get": {
                 "description": "查询游戏机",
                 "consumes": [
@@ -376,13 +376,13 @@ const docTemplatejamma = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyList-types_GameBox"
+                            "$ref": "#/definitions/api.ReplyList-types_Box"
                         }
                     }
                 }
             }
         },
-        "/device/search": {
+        "/box/search": {
             "post": {
                 "description": "查询游戏机",
                 "consumes": [
@@ -410,13 +410,13 @@ const docTemplatejamma = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyList-types_GameBox"
+                            "$ref": "#/definitions/api.ReplyList-types_Box"
                         }
                     }
                 }
             }
         },
-        "/device/{id}": {
+        "/box/{id}": {
             "get": {
                 "description": "获取游戏机",
                 "consumes": [
@@ -442,7 +442,7 @@ const docTemplatejamma = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameBox"
+                            "$ref": "#/definitions/api.ReplyData-types_Box"
                         }
                     }
                 }
@@ -473,7 +473,7 @@ const docTemplatejamma = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.GameBox"
+                            "$ref": "#/definitions/types.Box"
                         }
                     }
                 ],
@@ -481,13 +481,13 @@ const docTemplatejamma = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameBox"
+                            "$ref": "#/definitions/api.ReplyData-types_Box"
                         }
                     }
                 }
             }
         },
-        "/device/{id}/delete": {
+        "/box/{id}/delete": {
             "get": {
                 "description": "删除游戏机",
                 "consumes": [
@@ -513,7 +513,7 @@ const docTemplatejamma = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameBox"
+                            "$ref": "#/definitions/api.ReplyData-types_Box"
                         }
                     }
                 }
@@ -573,7 +573,7 @@ const docTemplatejamma = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.GameHall"
+                            "$ref": "#/definitions/types.Game"
                         }
                     }
                 ],
@@ -581,7 +581,7 @@ const docTemplatejamma = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameHall"
+                            "$ref": "#/definitions/api.ReplyData-types_Game"
                         }
                     }
                 }
@@ -616,7 +616,7 @@ const docTemplatejamma = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyList-types_GameHall"
+                            "$ref": "#/definitions/api.ReplyList-types_Game"
                         }
                     }
                 }
@@ -650,7 +650,7 @@ const docTemplatejamma = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyList-types_GameHall"
+                            "$ref": "#/definitions/api.ReplyList-types_Game"
                         }
                     }
                 }
@@ -682,7 +682,7 @@ const docTemplatejamma = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameHall"
+                            "$ref": "#/definitions/api.ReplyData-types_Game"
                         }
                     }
                 }
@@ -713,7 +713,7 @@ const docTemplatejamma = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/types.GameHall"
+                            "$ref": "#/definitions/types.Game"
                         }
                     }
                 ],
@@ -721,7 +721,7 @@ const docTemplatejamma = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameHall"
+                            "$ref": "#/definitions/api.ReplyData-types_Game"
                         }
                     }
                 }
@@ -753,7 +753,7 @@ const docTemplatejamma = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_GameHall"
+                            "$ref": "#/definitions/api.ReplyData-types_Game"
                         }
                     }
                 }
@@ -793,7 +793,7 @@ const docTemplatejamma = `{
                 }
             }
         },
-        "/record/recharge/count": {
+        "/recharge/count": {
             "post": {
                 "description": "查询重置记录数量",
                 "consumes": [
@@ -827,7 +827,7 @@ const docTemplatejamma = `{
                 }
             }
         },
-        "/record/recharge/create": {
+        "/recharge/create": {
             "post": {
                 "description": "创建重置记录",
                 "consumes": [
@@ -861,7 +861,7 @@ const docTemplatejamma = `{
                 }
             }
         },
-        "/record/recharge/list": {
+        "/recharge/list": {
             "get": {
                 "description": "查询重置记录",
                 "consumes": [
@@ -896,7 +896,7 @@ const docTemplatejamma = `{
                 }
             }
         },
-        "/record/recharge/search": {
+        "/recharge/search": {
             "post": {
                 "description": "查询重置记录",
                 "consumes": [
@@ -925,207 +925,6 @@ const docTemplatejamma = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/api.ReplyList-types_Recharge"
-                        }
-                    }
-                }
-            }
-        },
-        "/record/recharge/{id}": {
-            "get": {
-                "description": "获取重置记录",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "device"
-                ],
-                "summary": "获取重置记录",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "重置记录ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_Recharge"
-                        }
-                    }
-                }
-            }
-        },
-        "/record/signin/count": {
-            "post": {
-                "description": "查询签到记录数量",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "device"
-                ],
-                "summary": "查询签到记录数量",
-                "parameters": [
-                    {
-                        "description": "查询参数",
-                        "name": "search",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/api.ParamSearch"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.ReplyData-int64"
-                        }
-                    }
-                }
-            }
-        },
-        "/record/signin/create": {
-            "post": {
-                "description": "创建签到记录",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "device"
-                ],
-                "summary": "创建签到记录",
-                "parameters": [
-                    {
-                        "description": "签到记录信息",
-                        "name": "search",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/types.SignIn"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_SignIn"
-                        }
-                    }
-                }
-            }
-        },
-        "/record/signin/list": {
-            "get": {
-                "description": "查询签到记录",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "device"
-                ],
-                "summary": "查询签到记录",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "skip",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.ReplyList-types_SignIn"
-                        }
-                    }
-                }
-            }
-        },
-        "/record/signin/search": {
-            "post": {
-                "description": "查询签到记录",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "device"
-                ],
-                "summary": "查询签到记录",
-                "parameters": [
-                    {
-                        "description": "查询参数",
-                        "name": "search",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/api.ParamSearch"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.ReplyList-types_SignIn"
-                        }
-                    }
-                }
-            }
-        },
-        "/record/signin/{id}": {
-            "get": {
-                "description": "获取签到记录",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "device"
-                ],
-                "summary": "获取签到记录",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "签到记录ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.ReplyData-types_SignIn"
                         }
                     }
                 }
@@ -1527,22 +1326,22 @@ const docTemplatejamma = `{
                 }
             }
         },
-        "api.ReplyData-types_GameBox": {
+        "api.ReplyData-types_Box": {
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/types.GameBox"
+                    "$ref": "#/definitions/types.Box"
                 },
                 "error": {
                     "type": "string"
                 }
             }
         },
-        "api.ReplyData-types_GameHall": {
+        "api.ReplyData-types_Game": {
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/types.GameHall"
+                    "$ref": "#/definitions/types.Game"
                 },
                 "error": {
                     "type": "string"
@@ -1599,13 +1398,13 @@ const docTemplatejamma = `{
                 }
             }
         },
-        "api.ReplyList-types_GameBox": {
+        "api.ReplyList-types_Box": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/types.GameBox"
+                        "$ref": "#/definitions/types.Box"
                     }
                 },
                 "error": {
@@ -1616,13 +1415,13 @@ const docTemplatejamma = `{
                 }
             }
         },
-        "api.ReplyList-types_GameHall": {
+        "api.ReplyList-types_Game": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/types.GameHall"
+                        "$ref": "#/definitions/types.Game"
                     }
                 },
                 "error": {
@@ -1720,7 +1519,7 @@ const docTemplatejamma = `{
                 }
             }
         },
-        "types.GameBox": {
+        "types.Box": {
             "type": "object",
             "properties": {
                 "created": {
@@ -1734,12 +1533,12 @@ const docTemplatejamma = `{
                     "description": "禁用",
                     "type": "boolean"
                 },
-                "id": {
-                    "type": "integer"
-                },
-                "img": {
+                "icon": {
                     "description": "图片",
                     "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "name": {
                     "description": "名称",
@@ -1751,7 +1550,7 @@ const docTemplatejamma = `{
                 }
             }
         },
-        "types.GameHall": {
+        "types.Game": {
             "type": "object",
             "properties": {
                 "created": {
@@ -1765,15 +1564,19 @@ const docTemplatejamma = `{
                     "description": "禁用",
                     "type": "boolean"
                 },
-                "id": {
-                    "type": "integer"
-                },
-                "img": {
+                "icon": {
                     "description": "图片",
                     "type": "string"
                 },
+                "id": {
+                    "type": "integer"
+                },
                 "name": {
                     "description": "名称",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "类型",
                     "type": "string"
                 }
             }

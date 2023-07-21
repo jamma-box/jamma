@@ -97,7 +97,7 @@ func gamehallRouter(app *gin.RouterGroup) {
 	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Game]())
 
 	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.Game](nil, nil,
-		"name", "desc", "img", "disabled"))
+		"name", "desc", "icon", "type", "disabled"))
 
 	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.Game](nil, nil))
 
