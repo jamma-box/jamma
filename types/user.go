@@ -10,10 +10,10 @@ type User struct {
 	Email     string    `json:"email,omitempty"`        //邮箱
 	Cellphone string    `json:"cellphone,omitempty"`    //手机
 	Avatar    string    `json:"avatar,omitempty"`       //头像
-	Balance   float64   `json:"balance,omitempty"`      //余额
-	Integral  int64     `json:"integral,omitempty"`     //游戏积分
-	Disabled  bool      `json:"disabled,omitempty"`     //禁用
-	Created   time.Time `json:"created,omitempty" xorm:"created"`
+	Balance   float64   `json:"balance"`                //余额
+	Integral  int64     `json:"integral"`               //游戏积分
+	Disabled  bool      `json:"disabled"`               //禁用
+	Created   time.Time `json:"created" xorm:"created"`
 }
 
 type Me struct {

@@ -45,7 +45,7 @@ func login(ctx *gin.Context) {
 		if obj.Username == "admin" {
 			user.Id = 0
 			user.Username = obj.Username
-			user.Name = "管理员"
+			user.NickName = "管理员"
 			_, err = db.Engine.InsertOne(&user)
 			if err != nil {
 				curd.Error(ctx, err)

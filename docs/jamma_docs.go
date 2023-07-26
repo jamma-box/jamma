@@ -1533,6 +1533,9 @@ const docTemplatejamma = `{
                     "description": "禁用",
                     "type": "boolean"
                 },
+                "game_id": {
+                    "type": "integer"
+                },
                 "icon": {
                     "description": "图片",
                     "type": "string"
@@ -1652,8 +1655,8 @@ const docTemplatejamma = `{
                     "description": "游戏积分",
                     "type": "integer"
                 },
-                "name": {
-                    "description": "名称",
+                "nick_name": {
+                    "description": "昵称",
                     "type": "string"
                 },
                 "username": {
