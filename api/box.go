@@ -88,7 +88,7 @@ func boxRouter(app *gin.RouterGroup) {
 
 	app.POST("/count", curd.ApiCount[types.Box]())
 
-	app.POST("/search", curd.ApiSearch[types.Box]("id", "name", "disabled", "created"))
+	app.POST("/search", curd.ApiSearch[types.Box]())
 
 	app.GET("/list", curd.ApiList[types.Box]())
 
@@ -97,7 +97,7 @@ func boxRouter(app *gin.RouterGroup) {
 	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Box]())
 
 	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.Box](nil, nil,
-		"type", "name", "desc", "icon", "disabled"))
+		"name", "desc", "icon", "type", "disabled", "game_id"))
 
 	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.Box](nil, nil))
 

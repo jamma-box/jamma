@@ -166,6 +166,7 @@ definitions:
         description: 禁用
         type: boolean
       game_id:
+        description: 游戏机ID
         type: integer
       icon:
         description: 图片

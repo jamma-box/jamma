@@ -1534,6 +1534,7 @@ const docTemplatejamma = `{
                     "type": "boolean"
                 },
                 "game_id": {
+                    "description": "游戏机ID",
                     "type": "integer"
                 },
                 "icon": {

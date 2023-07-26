@@ -88,7 +88,7 @@ func gameRouter(app *gin.RouterGroup) {
 
 	app.POST("/count", curd.ApiCount[types.Game]())
 
-	app.POST("/search", curd.ApiSearch[types.Game]("id", "name", "disabled", "created"))
+	app.POST("/search", curd.ApiSearch[types.Game]())
 
 	app.GET("/list", curd.ApiList[types.Game]())
 
