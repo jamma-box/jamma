@@ -3,7 +3,6 @@ package api
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
@@ -30,8 +29,7 @@ func login(ctx *gin.Context) {
 
 	var obj loginObj
 	if err := ctx.ShouldBindJSON(&obj); err != nil {
-		fmt.Println(err.Error())
-		fmt.Println(obj)
+
 		curd.Error(ctx, err)
 		return
 	}
@@ -78,7 +76,6 @@ func login(ctx *gin.Context) {
 
 		password.Id = strconv.FormatInt(user.Id, 10)
 		password.Password = md5hash(dp)
-		fmt.Println(password.Password)
 		_, err = db.Engine.InsertOne(&password)
 		if err != nil {
 			curd.Error(ctx, err)
