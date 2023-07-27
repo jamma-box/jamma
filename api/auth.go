@@ -50,9 +50,9 @@ func auth(ctx *gin.Context) {
 	//生成Token
 	token, err := jwtGenerate(strconv.FormatInt(user.Id, 10))
 	if err != nil {
+		//curd.Error(ctx, err)
 		return
 	}
-
 	curd.OK(ctx, gin.H{
 		token: token,
 	})

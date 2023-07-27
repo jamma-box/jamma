@@ -1,77 +1,81 @@
 package chat
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	socketio "github.com/googollee/go-socket.io"
+	"log"
 	"net/http"
+	"net/url"
 )
-
-var conw = make([]socketio.Conn, 0)
 
 func Register(router *gin.RouterGroup) {
 
 	server := socketio.NewServer(nil)
 
+	//redis 适配器
+	//ok, err := server.Adapter(&socketio.RedisAdapterOptions{
+	//	Addr:    "127.0.0.1:8080",
+	//	Prefix:  "socket.io",
+	//	Network: "tcp",
+	//})
+	//
+	//if err != nil || !ok {
+	//	log.Fatal("socket-io adapter error:", err)
+	//}
+	// 建立连接
 	server.OnConnect("/", func(s socketio.Conn) error {
-		s.SetContext("")
-		conw = append(conw, s)
-		fmt.Println("connected:", s.ID())
+		params, _ := url.ParseQuery(s.URL().RawQuery)
+		uid := params.Get("uid")
+		s.SetContext(uid)
+		//加入房间
+		s.Join("chat1")
+		log.Println("建立连接::", s.ID(), uid)
 		return nil
 	})
-
-	server.OnEvent("/", "notice", func(s socketio.Conn, msg string) {
-		fmt.Println("notice:", msg)
-		//群推所有在线人员
-		for _, val := range conw {
-			val.Emit("reply", "have "+msg)
-		}
-		//s.Emit("reply", "have "+msg)
-	})
-
-	server.OnEvent("/chat", "msg", func(s socketio.Conn, msg string) string {
-		s.SetContext(msg)
-		return "recv " + msg
-	})
-
-	server.OnEvent("/", "bye", func(s socketio.Conn) string {
-		last := s.Context().(string)
-		s.Emit("bye", last)
-		s.Close()
-		return last
-	})
-
+	// 连接错误
 	server.OnError("/", func(s socketio.Conn, e error) {
-		fmt.Println("meet error:", e)
+		log.Println("连接错误:", s.ID(), e) //记录连接错误信息
 	})
-
+	// 断开连接
 	server.OnDisconnect("/", func(s socketio.Conn, reason string) {
-		fmt.Println("closed", reason)
+		s.LeaveAll() //将socket从所有加入的room中移除
+		if uid := s.Context(); uid != nil {
+			log.Printf("用户[%s]断开连接", uid)
+		}
+		log.Println("关闭连接：", s.ID(), reason)
 	})
-	//go server.Serve()
-	//	//defer server.Close()
+	// 广播
+	server.BroadcastToRoom("/", "chat1", "notice", "通知")
 
-	//允许跨域
-	router.Use(Cors())
+	// 服务/事件
+	server.OnEvent("/", "notice", func(s socketio.Conn, msg string) {
+		log.Println("notice:", msg)
+		s.Emit("notice", "have "+msg) // 向client回复内容
+	})
 
-	router.Any("/*any", gin.WrapH(server))
+	//server.OnEvent("/chat", "msg", func(s socketio.Conn, msg string) string {
+	//	s.SetContext(msg)
+	//	return "recv " + msg
+	//})
+
+	//server.OnEvent("/", "bye", func(s socketio.Conn) string {
+	//	last := s.Context().(string)
+	//	s.Emit("bye", last)
+	//	s.Close()
+	//	return last
+	//})
+
+	router.GET("/bcast", func(context *gin.Context) {
+		// 向房间内的所有人员发消息
+		server.BroadcastToRoom("/", "chat1", "notice", "广播通知")
+	})
+
+	go server.Serve()
+	defer server.Close()
+	router.GET("/chat/*any", gin.WrapH(server))
+	router.POST("/chat/*any", gin.WrapH(server))
+	router.StaticFS("/public", http.Dir("../static/chat"))
+	//router.Any("/*any", gin.WrapH(server))
 	//router.GET("/*any", gin.WrapH(server))
 	//router.POST("/*any", gin.WrapH(server))
-}
-
-func Cors() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		method := c.Request.Method
-
-		c.Header("Access-Control-Allow-Origin", "*")
-		c.Header("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token, x-token")
-		c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PATCH, PUT")
-		c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
-		c.Header("Access-Control-Allow-Credentials", "true")
-
-		if method == "OPTIONS" {
-			c.AbortWithStatus(http.StatusNoContent)
-		}
-		c.Next()
-	}
 }
