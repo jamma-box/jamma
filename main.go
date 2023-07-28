@@ -39,7 +39,7 @@ func main() {
 
 	//原本的Main函数
 	engine := web.CreateEngine()
-
+	engine.Use(api.Cors())
 	//注册前端接口
 	api.RegisterRoutes(engine.Group("/api"))
 

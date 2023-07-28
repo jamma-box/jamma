@@ -61,6 +61,22 @@ func mustLogin(ctx *gin.Context) {
 	}
 }
 
+func Cors() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		method := c.Request.Method
+
+		c.Header("Access-Control-Allow-Origin", "*")
+		c.Header("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token, x-token")
+		c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PATCH, PUT")
+		c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
+		c.Header("Access-Control-Allow-Credentials", "true")
+
+		if method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusNoContent)
+		}
+		c.Next()
+	}
+}
 func RegisterRoutes(router *gin.RouterGroup) {
 	//错误恢复，并返回至前端
 	router.Use(catchError)
@@ -69,6 +85,7 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	router.POST("/login", login)
 
 	//检查 session，必须登录
+
 	router.Use(mustLogin)
 
 	router.GET("/logout", logout)

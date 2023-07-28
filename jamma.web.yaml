@@ -1,4 +1,4 @@
 addr: :8082
 debug: true
-cors: true
+cors: false
 gzip: true
