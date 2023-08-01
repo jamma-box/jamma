@@ -5,8 +5,8 @@ import "time"
 // User 用户
 type User struct {
 	Id        int64     `json:"id" xorm:"pk"`
-	Username  string    `json:"username" xorm:"unique"` //账号
 	NickName  string    `json:"nick_name,omitempty"`    //昵称
+	Username  string    `json:"username" xorm:"unique"` //账号
 	Email     string    `json:"email,omitempty"`        //邮箱
 	Cellphone string    `json:"cellphone,omitempty"`    //手机
 	Avatar    string    `json:"avatar,omitempty"`       //头像
