@@ -4,16 +4,17 @@ import "time"
 
 // User 用户
 type User struct {
-	Id        int64     `json:"id" xorm:"pk"`
-	NickName  string    `json:"nick_name,omitempty"`    //昵称
-	Username  string    `json:"username" xorm:"unique"` //账号
-	Email     string    `json:"email,omitempty"`        //邮箱
-	Cellphone string    `json:"cellphone,omitempty"`    //手机
-	Avatar    string    `json:"avatar,omitempty"`       //头像
-	Balance   float64   `json:"balance"`                //余额
-	Integral  int64     `json:"integral"`               //游戏积分
-	Disabled  bool      `json:"disabled"`               //禁用
-	Created   time.Time `json:"created" xorm:"created"`
+	Id          int64     `json:"id" xorm:"pk"`
+	NickName    string    `json:"nick_name,omitempty"`    //昵称
+	Username    string    `json:"username" xorm:"unique"` //账号
+	Email       string    `json:"email,omitempty"`        //邮箱
+	Cellphone   string    `json:"cellphone,omitempty"`    //手机
+	Avatar      string    `json:"avatar,omitempty"`       //头像
+	Balance     float64   `json:"balance"`                //余额
+	Integral    int64     `json:"integral"`               //游戏积分
+	Disabled    bool      `json:"disabled"`               //禁用
+	PayPassword string    `json:"pay_password"`
+	Created     time.Time `json:"created" xorm:"created"`
 }
 
 type Me struct {

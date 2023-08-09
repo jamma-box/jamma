@@ -17,3 +17,19 @@ type SignIn struct {
 	Username string    `json:"username" xorm:"index"` //账号
 	Created  time.Time `json:"created" xorm:"created"`
 }
+
+// 聊天文本消息记录
+type TextRecord struct {
+	ChatText
+	Type string `json:"type"`
+	Time string `json:"time"`
+}
+
+// 聊天图片消息记录
+type ImgRecord struct {
+	Id      int64  `json:"id"`
+	Room    string `json:"room"`
+	ImgPath string `json:"img_path"`
+	Type    string `json:"type"`
+	Time    string `json:"time"`
+}

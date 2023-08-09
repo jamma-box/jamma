@@ -139,7 +139,7 @@ func userRouter(app *gin.RouterGroup) {
 	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.User]())
 
 	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.User](nil, nil,
-		"username", "nick_name", "cellphone", "email", "roles", "avatar", "balance", "game_integral", "disabled"))
+		"username", "nick_name", "cellphone", "email", "roles", "avatar", "balance", "game_integral", "disabled", "pay_password"))
 
 	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.User](nil, nil))
 

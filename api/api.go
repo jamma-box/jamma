@@ -78,6 +78,9 @@ func Cors() gin.HandlerFunc {
 	}
 }
 func RegisterRoutes(router *gin.RouterGroup) {
+
+	router.Use(Cors())
+
 	//错误恢复，并返回至前端
 	router.Use(catchError)
 
@@ -110,6 +113,8 @@ func RegisterRoutes(router *gin.RouterGroup) {
 
 	emailRouter(router.Group("/email"))
 
+	hongbaoRouter(router.Group("/hongbao"))
+	qiangHongbaoRouter(router.Group("/hongbao/qiang"))
 	//TODO 报接口错误（以下代码不生效，路由好像不是树形处理）
 	router.Use(func(ctx *gin.Context) {
 		curd.Fail(ctx, "Not found")
