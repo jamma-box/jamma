@@ -1,15 +1,15 @@
 package main
 
 import (
+	"arcade/api"
+	"arcade/chat"
+	"arcade/config"
+	_ "arcade/docs"
+	"arcade/types"
 	"embed"
 	"github.com/zgwit/iot-master/v3/pkg/db"
 	"github.com/zgwit/iot-master/v3/pkg/log"
 	"github.com/zgwit/iot-master/v3/pkg/web"
-	"jamma/api"
-	"jamma/chat"
-	"jamma/config"
-	_ "jamma/docs"
-	"jamma/types"
 	"net/http"
 )
 
@@ -36,7 +36,7 @@ func main() {
 		new(types.Box), new(types.Recharge),
 		new(types.SignIn), new(types.User),
 		new(types.Me), new(types.Password), new(types.UserHistory),
-		new(types.ChatHongBao), new(types.ChatQiangHongBao))
+		new(chat.RedPacket), new(chat.GrabPacket))
 	//原本的Main函数
 	engine := web.CreateEngine()
 	//注册前端接口

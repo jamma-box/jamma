@@ -1,11 +1,12 @@
 package api
 
 import (
+	"arcade/chat"
+	"arcade/types"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"github.com/zgwit/iot-master/v3/pkg/db"
-	"jamma/types"
 	"math/rand"
 	"strconv"
 	"time"
@@ -38,13 +39,14 @@ func hongbaoRouter(app *gin.RouterGroup) {
 			curd.Error(c, err)
 			return
 		}
-		if user.PayPassword == "" {
-			curd.Error(c, errors.New("支付密码未设置，请去用户界面设置"))
-			return
-		} else if user.PayPassword != hongbao.PayPassword {
-			curd.Error(c, errors.New("支付密码错误"))
-			return
-		}
+		//if user.PayPassword == "" {
+		//	curd.Error(c, errors.New("支付密码未设置，请去用户界面设置"))
+		//	return
+		//} else if user.PayPassword != hongbao.PayPassword {
+		//	curd.Error(c, errors.New("支付密码错误"))
+		//	return
+		//}
+
 		//	扣钱
 		user.Balance -= hongbao.Money
 		_, err = db.Engine.ID(hongbao.UserId).Update(&user)
@@ -60,7 +62,7 @@ func hongbaoRouter(app *gin.RouterGroup) {
 			curd.Error(c, errors.New("用户id生成失败"))
 			return
 		}
-		hb := types.ChatHongBao{
+		hb := chat.RedPacket{
 			Id:           randId,
 			UserId:       hongbao.UserId,
 			Type:         hongbao.Type,
@@ -79,12 +81,12 @@ func hongbaoRouter(app *gin.RouterGroup) {
 		curd.OK(c, hb)
 	})
 
-	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.ChatHongBao]())
+	app.GET("/:id", curd.ParseParamId, curd.ApiGet[chat.RedPacket]())
 
-	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.ChatHongBao](nil, nil,
+	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[chat.RedPacket](nil, nil,
 		"user_id", "room", "type", "current_money", "current_num", "total_money", "total_num"))
 
-	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.ChatHongBao](nil, nil))
+	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[chat.RedPacket](nil, nil))
 }
 func generateRandomNumber(length int, r *rand.Rand) string {
 	// 随机数生成的字符集合

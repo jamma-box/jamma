@@ -1,9 +1,9 @@
 package api
 
 import (
+	"arcade/types"
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
-	"jamma/types"
 )
 
 // @Summary 查询重置记录数量

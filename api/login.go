@@ -1,13 +1,13 @@
 package api
 
 import (
+	"arcade/types"
 	"crypto/md5"
 	"encoding/hex"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"github.com/zgwit/iot-master/v3/pkg/db"
-	"jamma/types"
 	"strconv"
 )
 
@@ -46,7 +46,7 @@ func login(ctx *gin.Context) {
 		if obj.Username == "admin" {
 			user.Id = 0
 			user.Username = obj.Username
-			user.NickName = "管理员"
+			user.Nickname = "管理员"
 			_, err = db.Engine.InsertOne(&user)
 			if err != nil {
 				curd.Error(ctx, err)

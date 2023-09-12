@@ -1,11 +1,12 @@
 package api
 
 import (
+	"arcade/chat"
+	"arcade/types"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"github.com/zgwit/iot-master/v3/pkg/db"
-	"jamma/types"
 	"math/rand"
 	"sync"
 )
@@ -32,12 +33,12 @@ func qiangHongbaoRouter(app *gin.RouterGroup) {
 
 	})
 
-	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.ChatHongBao]())
+	app.GET("/:id", curd.ParseParamId, curd.ApiGet[chat.RedPacket]())
 
-	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.ChatHongBao](nil, nil,
+	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[chat.RedPacket](nil, nil,
 		"id", "user_id", "money", "room"))
 
-	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.ChatHongBao](nil, nil))
+	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[chat.RedPacket](nil, nil))
 
 }
 func qiangHongBao(c *gin.Context, qhb *QiangHongBao) {
@@ -47,7 +48,7 @@ func qiangHongBao(c *gin.Context, qhb *QiangHongBao) {
 	mutex.Lock()
 	//数据获取
 	//获取红包数据
-	hb := new(types.ChatHongBao)
+	hb := new(chat.RedPacket)
 	_, err := db.Engine.ID(qhb.Id).Get(hb)
 	if err != nil {
 		curd.Error(c, errors.New("红包数据获取错误"))
@@ -75,7 +76,7 @@ func qiangHongBao(c *gin.Context, qhb *QiangHongBao) {
 	hb.CurrentNum--
 	user.Balance += money
 	//抢红包记录
-	qianghongbao := types.ChatQiangHongBao{
+	qianghongbao := chat.GrabPacket{
 		Id:     qhb.Id,
 		UserId: qhb.UserId,
 		Money:  money,

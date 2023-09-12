@@ -1,10 +1,10 @@
 package api
 
 import (
+	"arcade/types"
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"github.com/zgwit/iot-master/v3/pkg/db"
-	"jamma/types"
 )
 
 // @Summary 获取用户信息

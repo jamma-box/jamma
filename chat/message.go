@@ -1,23 +1,23 @@
-package types
+package chat
 
 import "time"
 
-// join
-type ChatJoin struct {
+// 加入
+type Join struct {
 	Id      int64  `json:"id"`
 	Room    string `json:"room"`
 	Content string `json:"content"`
 }
 
 // 文本
-type ChatText struct {
+type Text struct {
 	Id      int64  `json:"id"`
 	Room    string `json:"room"`
 	Content string `json:"content"`
 }
 
 // 图片
-type ChatImg struct {
+type Image struct {
 	Id   int64  `json:"id"`
 	Room string `json:"room"`
 	//Img     []byte `json:"img"`
@@ -25,7 +25,7 @@ type ChatImg struct {
 }
 
 // 红包记录
-type ChatHongBao struct {
+type RedPacket struct {
 	Id           int64     `json:"id" xorm:"pk"`
 	UserId       int64     `json:"user_id" xorm:"index"`
 	Type         int64     `json:"type"` //0：默认红包，1:随机红包，
@@ -37,8 +37,8 @@ type ChatHongBao struct {
 	Created      time.Time `json:"created" xorm:"created"`
 }
 
-// 抢红的记录表
-type ChatQiangHongBao struct {
+// 抢红包
+type GrabPacket struct {
 	Id      int64     `json:"id" xorm:"index"`
 	UserId  int64     `json:"user_id" xorm:"index"`
 	Money   float64   `json:"money"`
