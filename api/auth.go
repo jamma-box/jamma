@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"github.com/zgwit/iot-master/v3/pkg/db"
-	"strconv"
 )
 
 func auth(ctx *gin.Context) {
@@ -48,7 +47,7 @@ func auth(ctx *gin.Context) {
 	}
 
 	//生成Token
-	token, err := jwtGenerate(strconv.FormatInt(user.Id, 10))
+	token, err := jwtGenerate(user.Id)
 	if err != nil {
 		//curd.Error(ctx, err)
 		return

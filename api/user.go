@@ -134,20 +134,20 @@ func userRouter(app *gin.RouterGroup) {
 
 	app.GET("/list", curd.ApiList[types.User]())
 
-	app.POST("/create", curd.ParseParamId, curd.ApiCreateHook[types.User](nil, nil))
+	app.POST("/create", curd.ParseParamStringId, curd.ApiCreateHook[types.User](nil, nil))
 
-	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.User]())
+	app.GET("/:id", curd.ParseParamStringId, curd.ApiGet[types.User]())
 
-	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.User](nil, nil,
+	app.POST("/:id", curd.ParseParamStringId, curd.ApiUpdateHook[types.User](nil, nil,
 		"username", "nick_name", "cellphone", "email", "roles", "avatar", "balance", "game_integral", "disabled", "pay_password"))
 
-	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.User](nil, nil))
+	app.GET("/:id/delete", curd.ParseParamStringId, curd.ApiDeleteHook[types.User](nil, nil))
 
-	app.GET("/:id/password", curd.ParseParamId, userPassword)
+	app.GET("/:id/password", curd.ParseParamStringId, userPassword)
 
-	app.GET("/:id/enable", curd.ParseParamId, curd.ApiDisableHook[types.User](false, nil, nil))
+	app.GET("/:id/enable", curd.ParseParamStringId, curd.ApiDisableHook[types.User](false, nil, nil))
 
-	app.GET("/:id/disable", curd.ParseParamId, curd.ApiDisableHook[types.User](true, nil, nil))
+	app.GET("/:id/disable", curd.ParseParamStringId, curd.ApiDisableHook[types.User](true, nil, nil))
 
 	app.GET("/export", curd.ApiExport("user", "用户"))
 

@@ -3,18 +3,16 @@ package api
 import (
 	"arcade/chat"
 	"arcade/types"
-	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"github.com/zgwit/iot-master/v3/pkg/db"
 	"math/rand"
-	"strconv"
 	"time"
 )
 
 // 红包请求参数
 type HongBaoReq struct {
-	UserId      int64   `json:"user_id"`
+	UserId      string  `json:"user_id"`
 	Money       float64 `json:"money"`    //红包金额
 	Num         int64   `json:"num"`      //红包数量
 	PayPassword string  `json:"password"` //支付密码
@@ -57,13 +55,9 @@ func hongbaoRouter(app *gin.RouterGroup) {
 		//红包记录
 		r := rand.New(rand.NewSource(time.Now().UnixNano()))
 		randomNumber := generateRandomNumber(10, r)
-		randId, err := strconv.ParseInt(randomNumber, 10, 64)
-		if err != nil {
-			curd.Error(c, errors.New("用户id生成失败"))
-			return
-		}
+
 		hb := chat.RedPacket{
-			Id:           randId,
+			Id:           randomNumber,
 			UserId:       hongbao.UserId,
 			Type:         hongbao.Type,
 			Room:         hongbao.Room,
@@ -81,12 +75,12 @@ func hongbaoRouter(app *gin.RouterGroup) {
 		curd.OK(c, hb)
 	})
 
-	app.GET("/:id", curd.ParseParamId, curd.ApiGet[chat.RedPacket]())
+	app.GET("/:id", curd.ParseParamStringId, curd.ApiGet[chat.RedPacket]())
 
-	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[chat.RedPacket](nil, nil,
+	app.POST("/:id", curd.ParseParamStringId, curd.ApiUpdateHook[chat.RedPacket](nil, nil,
 		"user_id", "room", "type", "current_money", "current_num", "total_money", "total_num"))
 
-	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[chat.RedPacket](nil, nil))
+	app.GET("/:id/delete", curd.ParseParamStringId, curd.ApiDeleteHook[chat.RedPacket](nil, nil))
 }
 func generateRandomNumber(length int, r *rand.Rand) string {
 	// 随机数生成的字符集合

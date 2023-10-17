@@ -13,8 +13,8 @@ import (
 
 // 抢红包参数
 type QiangHongBao struct {
-	Id     int64 `json:"id"` //红包id
-	UserId int64 `json:"user_id"`
+	Id     string `json:"id"` //红包id
+	UserId string `json:"user_id"`
 }
 
 var mutex = sync.Mutex{}

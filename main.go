@@ -6,7 +6,6 @@ import (
 	"arcade/config"
 	"arcade/types"
 	"embed"
-	"github.com/zgwit/iot-master/v3/pkg/build"
 	"github.com/zgwit/iot-master/v3/pkg/db"
 	"github.com/zgwit/iot-master/v3/pkg/log"
 	"github.com/zgwit/iot-master/v3/pkg/web"
@@ -24,17 +23,13 @@ var wwwFiles embed.FS
 // @query.collection.format multi
 
 func main() {
-	build.Println()
 	config.Load()
 
 	err := db.Open()
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = log.Open()
-	if err != nil {
-		log.Fatal(err)
-	}
+
 	db.Engine.Sync2(new(types.Email), new(types.Game),
 		new(types.Box), new(types.Recharge),
 		new(types.SignIn), new(types.User),

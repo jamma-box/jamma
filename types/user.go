@@ -4,7 +4,7 @@ import "time"
 
 // User 用户
 type User struct {
-	Id        int64     `json:"id" xorm:"pk"`
+	Id        string    `json:"id" xorm:"pk"`
 	Username  string    `json:"username" xorm:"unique"` //账号
 	Nickname  string    `json:"nickname,omitempty"`     //昵称
 	Email     string    `json:"email,omitempty"`        //邮箱
@@ -28,8 +28,8 @@ type Password struct {
 }
 
 type UserHistory struct {
-	Id      int64     `json:"id"`
-	UserId  int64     `json:"user_id"`
+	Id      string    `json:"id"`
+	UserId  string    `json:"user_id"`
 	Event   string    `json:"event"`
 	Created time.Time `json:"created" xorm:"created"`
 }
