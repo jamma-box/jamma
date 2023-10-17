@@ -1,1 +1,1 @@
-swag init --instanceName jamma
+swag init --instanceName arcade

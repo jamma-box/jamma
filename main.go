@@ -4,9 +4,9 @@ import (
 	"arcade/api"
 	"arcade/chat"
 	"arcade/config"
-	_ "arcade/docs"
 	"arcade/types"
 	"embed"
+	"github.com/zgwit/iot-master/v3/pkg/build"
 	"github.com/zgwit/iot-master/v3/pkg/db"
 	"github.com/zgwit/iot-master/v3/pkg/log"
 	"github.com/zgwit/iot-master/v3/pkg/web"
@@ -16,22 +16,25 @@ import (
 //go:embed all:www
 var wwwFiles embed.FS
 
-// @title jamma接口文档
+// @title arcade接口文档
 // @version 1.0 版本
 // @description API文档
 // @BasePath /api/
-// @InstanceName jamma
+// @InstanceName arcade
 // @query.collection.format multi
 
 func main() {
-
+	build.Println()
 	config.Load()
 
 	err := db.Open()
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	err = log.Open()
+	if err != nil {
+		log.Fatal(err)
+	}
 	db.Engine.Sync2(new(types.Email), new(types.Game),
 		new(types.Box), new(types.Recharge),
 		new(types.SignIn), new(types.User),
@@ -46,7 +49,7 @@ func main() {
 	chat.Register(engine.Group("/chat"))
 
 	//注册接口文档
-	web.RegisterSwaggerDocs(&engine.RouterGroup, "jamma")
+	web.RegisterSwaggerDocs(&engine.RouterGroup, "arcade")
 
 	//附件
 	//engine.Static("/attach", "attach")

@@ -7,7 +7,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 go env -w GOPRIVATE=*.gitlab.com,*.gitee.com
 go env -w GOSUMDB=off
 
-app="jamma"
+app="arcade"
 
 pkg="github.com/zgwit/iot-master/v3/pkg/build"
 gitTag=$(git tag -l | tail -n 1)
@@ -23,7 +23,7 @@ ldflags="-X '${pkg}.Version=$gitTag' \
 export GOARCH=amd64
 
 export GOOS=windows
-go build -ldflags "$ldflags" -o jamma.exe main.go
+go build -ldflags "$ldflags" -o arcade.exe main.go
 
 export GOOS=linux
-go build -ldflags "$ldflags" -o jamma main.go
+go build -ldflags "$ldflags" -o arcade main.go

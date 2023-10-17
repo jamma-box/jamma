@@ -167,17 +167,11 @@ definitions:
         type: boolean
       game_id:
         description: 游戏机ID
-        type: integer
-      icon:
-        description: 图片
         type: string
       id:
-        type: integer
+        type: string
       name:
         description: 名称
-        type: string
-      type:
-        description: 类型
         type: string
     type: object
   types.Game:
@@ -191,10 +185,10 @@ definitions:
         description: 禁用
         type: boolean
       icon:
-        description: 图片
+        description: 图标
         type: string
       id:
-        type: integer
+        type: string
       name:
         description: 名称
         type: string
@@ -205,7 +199,7 @@ definitions:
   types.Recharge:
     properties:
       amount:
-        description: 充值金额
+        description: 充值金额 分
         type: integer
       created:
         type: string
@@ -224,9 +218,6 @@ definitions:
       user_id:
         description: 用户ID
         type: integer
-      username:
-        description: 账号
-        type: string
     type: object
   types.User:
     properties:
@@ -252,7 +243,7 @@ definitions:
       integral:
         description: 游戏积分
         type: integer
-      nick_name:
+      nickname:
         description: 昵称
         type: string
       username:
@@ -262,7 +253,7 @@ definitions:
 info:
   contact: {}
   description: API文档
-  title: jamma接口文档
+  title: arcade接口文档
   version: 1.0 版本
 paths:
   /attach/list/{name}:

@@ -10,7 +10,7 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-const key = "jamma-box"
+const key = "arcade-box"
 
 func jwtGenerate(id string) (string, error) {
 	var claims Claims

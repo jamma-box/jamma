@@ -1,4 +1,0 @@
-type: mysql
-url: root:Flzx3000c@tcp(git.zgwit.com:3306)/jamma?charset=utf8
-debug: false
-loglevel: 2
