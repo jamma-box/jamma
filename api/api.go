@@ -79,12 +79,9 @@ func Cors() gin.HandlerFunc {
 }
 func RegisterRoutes(router *gin.RouterGroup) {
 
-	router.Use(Cors())
-
 	//错误恢复，并返回至前端
 	router.Use(catchError)
 
-	router.GET("/auth", auth)
 	router.POST("/login", login)
 
 	//检查 session，必须登录

@@ -4,6 +4,7 @@ import (
 	"arcade/types"
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
@@ -25,14 +26,12 @@ func md5hash(text string) string {
 
 func login(ctx *gin.Context) {
 	session := sessions.Default(ctx)
-
 	var obj loginObj
 	if err := ctx.ShouldBindJSON(&obj); err != nil {
 
 		curd.Error(ctx, err)
 		return
 	}
-
 	var user types.User
 	has, err := db.Engine.Where("username=?", obj.Username).Get(&user)
 	if err != nil {
@@ -92,8 +91,15 @@ func login(ctx *gin.Context) {
 	//存入session
 	session.Set("user", user.Id)
 	_ = session.Save()
-
-	curd.OK(ctx, user)
+	token, err := jwtGenerate(user.Id)
+	if err != nil {
+		curd.Error(ctx, err)
+		return
+	}
+	res := make(map[string]interface{}, 2)
+	res["user"] = user
+	res["token"] = token
+	curd.OK(ctx, res)
 }
 
 func logout(ctx *gin.Context) {
@@ -124,7 +130,14 @@ func password(ctx *gin.Context) {
 		curd.Error(ctx, err)
 		return
 	}
-
+	if obj.Old == "" {
+		curd.Fail(ctx, "密码错误")
+		return
+	}
+	if obj.New == "" {
+		curd.Fail(ctx, "新密码不能为空")
+		return
+	}
 	var pwd types.Password
 	has, err := db.Engine.ID(ctx.GetString("user")).Get(&pwd)
 	if err != nil {
@@ -143,7 +156,7 @@ func password(ctx *gin.Context) {
 	pwd.Password = obj.New //前端已经加密过
 	_, err = db.Engine.ID(ctx.GetString("user")).Cols("password").Update(&pwd)
 	if err != nil {
-		curd.Error(ctx, err)
+		curd.Error(ctx, fmt.Errorf("密码修改失败，err:%v", err.Error()))
 		return
 	}
 
