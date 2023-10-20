@@ -25,8 +25,6 @@ import (
 // @Router /img/upload [post]
 func noopImgUpload() {}
 
-const imgRoot = "static\\image"
-
 type listParam struct {
 	Year  string `json:"year"`
 	Month string `json:"month"`
@@ -90,6 +88,12 @@ func imgRouter(app *gin.RouterGroup) {
 			query.Day = fmt.Sprintf("%v", t.Day())
 		}
 		//	查询文件名
+		//getwd, err := os.Getwd()
+		//if err != nil {
+		//	curd.Error(c, err)
+		//	return
+		//}
+		imgRoot := filepath.Join(".", "static", "image")
 		res := make([]listRes, 0)
 		err = filepath.WalkDir(imgRoot, func(fp string, fi fs.DirEntry, err error) error {
 			if err != nil {
