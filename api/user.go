@@ -2,6 +2,7 @@ package api
 
 import (
 	"arcade/types"
+
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"github.com/zgwit/iot-master/v3/pkg/db"
@@ -139,7 +140,7 @@ func userRouter(app *gin.RouterGroup) {
 	app.GET("/:id", curd.ParseParamStringId, curd.ApiGet[types.User]())
 
 	app.POST("/:id", curd.ParseParamStringId, curd.ApiUpdateHook[types.User](nil, nil,
-		"username", "nick_name", "cellphone", "email", "roles", "avatar", "balance", "game_integral", "disabled", "pay_password"))
+		"username", "nickname", "cellphone", "email", "roles", "signature", "gender", "avatar", "balance", "integral", "disabled", "pay_password"))
 
 	app.GET("/:id/delete", curd.ParseParamStringId, curd.ApiDeleteHook[types.User](nil, nil))
 

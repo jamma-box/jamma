@@ -3,8 +3,6 @@ package api
 import (
 	"errors"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -12,6 +10,9 @@ import (
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/zgwit/iot-master/v3/pkg/curd"
 )
 
 // @Summary 上传图片
@@ -117,7 +118,7 @@ func ReFileName(f string, i int) (string, error) {
 		return f, errors.New("没有找到图片格式的正则下标")
 	}
 	t := time.Now()
-	fileName := fmt.Sprintf("%v%d%d%d%d", t.Format("02"), t.Hour(), t.Minute(), t.Second(), i)
+	fileName := fmt.Sprintf("%v%d%d%d%d.png", t.Format("02"), t.Hour(), t.Minute(), t.Second(), i)
 
 	//f = fileName + f[index[0]:] //加了文件后缀
 	f = fileName //没加了文件后缀

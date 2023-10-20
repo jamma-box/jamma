@@ -11,6 +11,8 @@ type User struct {
 	Cellphone string    `json:"cellphone,omitempty"`    //手机
 	Avatar    string    `json:"avatar,omitempty"`       //头像
 	Balance   float64   `json:"balance"`                //余额
+	Gender    string    `json:"gender,omitempty"`       //性别
+	Signature string    `json:"signature,omitempty"`    //性别
 	Integral  int64     `json:"integral"`               //游戏积分
 	Disabled  bool      `json:"disabled"`               //禁用
 	Created   time.Time `json:"created" xorm:"created"`
