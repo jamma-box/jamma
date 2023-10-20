@@ -6,8 +6,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
-	"reflect"
-	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -26,7 +25,7 @@ import (
 // @Router /img/upload [post]
 func noopImgUpload() {}
 
-const imgRoot = "static/image"
+const imgRoot = "static\\image"
 
 type listParam struct {
 	Year  string `json:"year"`
@@ -55,23 +54,21 @@ func imgRouter(app *gin.RouterGroup) {
 			return
 		}
 		t := time.Now()
-		filePath := fmt.Sprintf("%s/static/image/%d/%d/", path, t.Year(), int(t.Month()))
+		filePath := fmt.Sprintf("static/image/%d/%d/", t.Year(), int(t.Month()))
 		//存储文件
-		resUrl := make(map[string]string)
-		for i, f := range file {
-			fileName, err := ReFileName(f.Filename, i+1)
-			if err != nil {
-				curd.Error(c, err)
-				return
-			}
-			resUrl[f.Filename] = filePath + fileName
-			err = c.SaveUploadedFile(f, filePath+fileName)
+		resUrl := make([]string, 0)
+		for _, f := range file {
+			//时间戳命名
+			filename := fmt.Sprintf("%v.png", time.Now().UnixMilli())
+			//响应添加
+			resUrl = append(resUrl, filepath.Join(filePath, filename))
+			//转存
+			err = c.SaveUploadedFile(f, filepath.Join(path, filePath, filename))
 			if err != nil {
 				curd.Error(c, errors.New("图片存储失败"))
 				return
 			}
 		}
-		//	返回url: {传过来的文件名：/img/年/月/修改后的文件名}
 		curd.OK(c, resUrl)
 	})
 	app.GET("/list", func(c *gin.Context) {
@@ -82,54 +79,46 @@ func imgRouter(app *gin.RouterGroup) {
 			curd.Error(c, errors.New("参数绑定错误"))
 			return
 		}
+		t := time.Now()
+		if query.Year == "" {
+			query.Year = fmt.Sprintf("%v", t.Year())
+		}
+		if query.Month == "" {
+			query.Month = fmt.Sprintf("%v", int(t.Month()))
+		}
+		if query.Day == "" {
+			query.Day = fmt.Sprintf("%v", t.Day())
+		}
 		//	查询文件名
 		res := make([]listRes, 0)
-		filepath.WalkDir(imgRoot, func(path string, d fs.DirEntry, err error) error {
+		err = filepath.WalkDir(imgRoot, func(fp string, fi fs.DirEntry, err error) error {
 			if err != nil {
 				return err
 			}
-			if !d.IsDir() {
-				arr := strings.Split(path, "\\")
-				index := indexOf(arr, "image")
+			if !fi.IsDir() {
+				filename := filepath.Base(fp)
+				ext := filepath.Ext(filename)
+				name := strings.TrimSuffix(filename, ext)
+				timeu, err := strconv.ParseInt(name, 10, 64)
+				if err != nil {
+					return err
+				}
+				t := time.UnixMilli(timeu)
 				res = append(res, listRes{
 					listParam: listParam{
-						Year:  arr[index+1],
-						Month: arr[index+2],
-						Day:   d.Name()[:2],
+						Year:  fmt.Sprintf("%d", t.Year()),
+						Month: fmt.Sprintf("%d", t.Month()),
+						Day:   fmt.Sprintf("%d", t.Day()),
 					},
-					Path: path,
+					Path: fp,
 				})
 			}
 			return nil
 		})
-		//按查询参数返回字符串数组
-
+		if err != nil {
+			curd.Error(c, err)
+			return
+		}
 		curd.List(c, res, int64(len(res)))
 	})
-}
-func ReFileName(f string, i int) (string, error) {
-	format := `\.\w+$`
-	re, err := regexp.Compile(format)
-	if err != nil {
-		return f, errors.New("图片格式正则没有匹配到")
-	}
-	index := re.FindStringIndex(f)
-	if index == nil {
-		return f, errors.New("没有找到图片格式的正则下标")
-	}
-	t := time.Now()
-	fileName := fmt.Sprintf("%v%d%d%d%d.png", t.Format("02"), t.Hour(), t.Minute(), t.Second(), i)
-
-	//f = fileName + f[index[0]:] //加了文件后缀
-	f = fileName //没加了文件后缀
-	return f, nil
-}
-func indexOf(arr interface{}, target interface{}) int {
-	slice := reflect.ValueOf(arr)
-	for i := 0; i < slice.Len(); i++ {
-		if slice.Index(i).Interface() == target {
-			return i
-		}
-	}
-	return -1
 }
