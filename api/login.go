@@ -42,7 +42,7 @@ func login(ctx *gin.Context) {
 	if !has {
 		//管理员自动创建
 		if obj.Username == "admin" {
-			user.Id = "0"
+			user.Id = 0
 			user.Username = obj.Username
 			user.Nickname = "管理员"
 			_, err = db.Engine.InsertOne(&user)
@@ -91,7 +91,7 @@ func login(ctx *gin.Context) {
 	//存入session
 	session.Set("user", user.Id)
 	_ = session.Save()
-	token, err := jwtGenerate(user.Id)
+	token, err := JwtGenerate(user.Id)
 	if err != nil {
 		curd.Error(ctx, err)
 		return

@@ -70,5 +70,5 @@ func rechargeRouter(app *gin.RouterGroup) {
 
 	app.POST("/create", curd.ApiCreateHook[types.Recharge](nil, nil))
 
-	app.GET("/:id", curd.ParseParamStringId, curd.ApiGet[types.Recharge]())
+	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Recharge]())
 }

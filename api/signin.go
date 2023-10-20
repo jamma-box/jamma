@@ -71,5 +71,5 @@ func signRouter(app *gin.RouterGroup) {
 
 	app.POST("/create", curd.ApiCreateHook[types.SignIn](nil, nil))
 
-	app.GET("/:id", curd.ParseParamStringId, curd.ApiGet[types.SignIn]())
+	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.SignIn]())
 }

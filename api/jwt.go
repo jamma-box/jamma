@@ -6,13 +6,13 @@ import (
 )
 
 type Claims struct {
-	Id string `json:"id"`
+	Id int64
 	jwt.RegisteredClaims
 }
 
 const key = "arcade-box"
 
-func jwtGenerate(id string) (string, error) {
+func JwtGenerate(id int64) (string, error) {
 	var claims Claims
 	claims.Id = id
 	claims.ExpiresAt = jwt.NewNumericDate(time.Now().AddDate(0, 1, 0))
@@ -20,7 +20,7 @@ func jwtGenerate(id string) (string, error) {
 	return token.SignedString([]byte(key))
 }
 
-func jwtVerify(str string) (*Claims, error) {
+func JwtVerify(str string) (*Claims, error) {
 	var claims Claims
 	token, err := jwt.ParseWithClaims(str, &claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(key), nil

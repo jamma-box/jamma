@@ -94,14 +94,14 @@ func boxRouter(app *gin.RouterGroup) {
 
 	app.POST("/create", curd.ApiCreateHook[types.Box](nil, nil))
 
-	app.GET("/:id", curd.ParseParamStringId, curd.ApiGet[types.Box]())
+	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Box]())
 
-	app.POST("/:id", curd.ParseParamStringId, curd.ApiUpdateHook[types.Box](nil, nil,
+	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.Box](nil, nil,
 		"name", "desc", "icon", "type", "disabled", "game_id"))
 
-	app.GET("/:id/delete", curd.ParseParamStringId, curd.ApiDeleteHook[types.Box](nil, nil))
+	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.Box](nil, nil))
 
 	app.GET(":id/disable", curd.ParseParamId, curd.ApiDisableHook[types.Box](true, nil, nil))
 
-	app.GET(":id/enable", curd.ParseParamStringId, curd.ApiDisableHook[types.Box](false, nil, nil))
+	app.GET(":id/enable", curd.ParseParamId, curd.ApiDisableHook[types.Box](false, nil, nil))
 }

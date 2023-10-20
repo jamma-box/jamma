@@ -6,8 +6,8 @@ import (
 
 // 充值记录
 type Recharge struct {
-	Id      string    `json:"id" xorm:"pk"`
-	UserId  string    `json:"user_id" xorm:"index"` //用户ID
-	Amount  int64     `json:"amount"`               //充值金额 分
-	Created time.Time `json:"created" xorm:"created"`
+	Id      int64     `json:"id,omitempty" form:"id"`
+	UserId  string    `json:"user_id" form:"user_id"` //用户ID
+	Amount  int64     `json:"amount" form:"amount"`   //充值金额 分
+	Created time.Time `json:"created" xorm:"created" form:"created"`
 }

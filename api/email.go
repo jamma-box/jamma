@@ -16,9 +16,9 @@ func emailRouter(app *gin.RouterGroup) {
 
 	app.POST("/create", curd.ApiCreateHook[types.Email](nil, nil))
 
-	app.GET("/:id", curd.ParseParamStringId, curd.ApiGet[types.Email]())
+	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Email]())
 
-	app.GET("/:id/delete", curd.ParseParamStringId, curd.ApiDeleteHook[types.Email](nil, nil))
+	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.Email](nil, nil))
 
 	app.GET("/:id/read", emailRead)
 

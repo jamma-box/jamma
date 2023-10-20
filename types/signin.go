@@ -6,7 +6,7 @@ import (
 
 // 签到记录
 type SignIn struct {
-	Id      string    `json:"id" xorm:"pk"`
-	UserId  string    `json:"user_id" xorm:"index"` //用户ID
-	Created time.Time `json:"created" xorm:"created"`
+	Id      int64     `json:"id,omitempty" form:"id"`
+	UserId  string    `json:"user_id" form:"user_id"` //用户ID
+	Created time.Time `json:"created" xorm:"created" form:"created"`
 }

@@ -94,14 +94,14 @@ func gameRouter(app *gin.RouterGroup) {
 
 	app.POST("/create", curd.ApiCreateHook[types.Game](nil, nil))
 
-	app.GET("/:id", curd.ParseParamStringId, curd.ApiGet[types.Game]())
+	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Game]())
 
-	app.POST("/:id", curd.ParseParamStringId, curd.ApiUpdateHook[types.Game](nil, nil,
+	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.Game](nil, nil,
 		"name", "desc", "icon", "type", "disabled"))
 
-	app.GET("/:id/delete", curd.ParseParamStringId, curd.ApiDeleteHook[types.Game](nil, nil))
+	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.Game](nil, nil))
 
-	app.GET(":id/disable", curd.ParseParamStringId, curd.ApiDisableHook[types.Game](true, nil, nil))
+	app.GET(":id/disable", curd.ParseParamId, curd.ApiDisableHook[types.Game](true, nil, nil))
 
-	app.GET(":id/enable", curd.ParseParamStringId, curd.ApiDisableHook[types.Game](false, nil, nil))
+	app.GET(":id/enable", curd.ParseParamId, curd.ApiDisableHook[types.Game](false, nil, nil))
 }

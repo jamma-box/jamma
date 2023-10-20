@@ -46,24 +46,24 @@ func imgRouter(app *gin.RouterGroup) {
 		}
 		file := form.File["file"]
 		//	当前跟路径
-		path, err := os.Getwd()
+		getwd, err := os.Getwd()
 		if err != nil {
 			curd.Error(c, errors.New("根路径获取失败"))
 			return
 		}
 		t := time.Now()
-		filePath := fmt.Sprintf("static/image/%d/%d/", t.Year(), int(t.Month()))
+		filePath := filepath.Join(getwd, "static", "image", fmt.Sprintf("%d", t.Year()), fmt.Sprintf("%d", t.Month()))
 		//存储文件
 		resUrl := make([]string, 0)
 		for _, f := range file {
 			//时间戳命名
 			filename := fmt.Sprintf("%v.png", time.Now().UnixMilli())
 			//响应添加
-			resUrl = append(resUrl, filepath.Join(filePath, filename))
+			resUrl = append(resUrl, filepath.Join(strings.TrimPrefix(filePath, getwd), filename))
 			//转存
-			err = c.SaveUploadedFile(f, filepath.Join(path, filePath, filename))
+			err = c.SaveUploadedFile(f, filepath.Join(filePath, filename))
 			if err != nil {
-				curd.Error(c, errors.New("图片存储失败"))
+				curd.Error(c, errors.New("图片存储失败:"+err.Error()))
 				return
 			}
 		}
@@ -88,12 +88,12 @@ func imgRouter(app *gin.RouterGroup) {
 			query.Day = fmt.Sprintf("%v", t.Day())
 		}
 		//	查询文件名
-		//getwd, err := os.Getwd()
-		//if err != nil {
-		//	curd.Error(c, err)
-		//	return
-		//}
-		imgRoot := filepath.Join(".", "static", "image")
+		getwd, err := os.Getwd()
+		if err != nil {
+			curd.Error(c, err)
+			return
+		}
+		imgRoot := filepath.Join(getwd, "static", "image")
 		res := make([]listRes, 0)
 		err = filepath.WalkDir(imgRoot, func(fp string, fi fs.DirEntry, err error) error {
 			if err != nil {
@@ -114,7 +114,7 @@ func imgRouter(app *gin.RouterGroup) {
 						Month: fmt.Sprintf("%d", t.Month()),
 						Day:   fmt.Sprintf("%d", t.Day()),
 					},
-					Path: fp,
+					Path: strings.TrimPrefix(fp, getwd),
 				})
 			}
 			return nil

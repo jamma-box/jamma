@@ -75,12 +75,12 @@ func hongbaoRouter(app *gin.RouterGroup) {
 		curd.OK(c, hb)
 	})
 
-	app.GET("/:id", curd.ParseParamStringId, curd.ApiGet[chat.RedPacket]())
+	app.GET("/:id", curd.ParseParamId, curd.ApiGet[chat.RedPacket]())
 
-	app.POST("/:id", curd.ParseParamStringId, curd.ApiUpdateHook[chat.RedPacket](nil, nil,
+	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[chat.RedPacket](nil, nil,
 		"user_id", "room", "type", "current_money", "current_num", "total_money", "total_num"))
 
-	app.GET("/:id/delete", curd.ParseParamStringId, curd.ApiDeleteHook[chat.RedPacket](nil, nil))
+	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[chat.RedPacket](nil, nil))
 }
 func generateRandomNumber(length int, r *rand.Rand) string {
 	// 随机数生成的字符集合

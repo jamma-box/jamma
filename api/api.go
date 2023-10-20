@@ -1,13 +1,15 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"net/http"
+	"strings"
 )
 
-func catchError(ctx *gin.Context) {
+func CatchError(ctx *gin.Context) {
 	defer func() {
 		if err := recover(); err != nil {
 			//runtime.Stack()
@@ -20,45 +22,56 @@ func catchError(ctx *gin.Context) {
 			default:
 				ctx.JSON(http.StatusOK, gin.H{"error": err})
 			}
-			//TODO 这里好像又继续了
 		}
 	}()
 	ctx.Next()
-
-	//TODO 内容如果为空，返回404
-
 }
 
-func mustLogin(ctx *gin.Context) {
-	token := ctx.Request.URL.Query().Get("token")
-	if token == "" {
-		token = ctx.Request.Header.Get("Authorization")
-		if token != "" {
-			//此处需要去掉 Bearer
-			token = token[7:]
-		}
+func MustLogin(c *gin.Context) {
+	// 检查有没有Bearer前缀
+	tokenString := c.GetHeader("Authorization")
+	if tokenString == "" {
+		tokenString = c.GetHeader("authorization")
 	}
-
-	if token != "" {
-		claims, err := jwtVerify(token)
-		if err != nil {
-			ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-			ctx.Abort()
-		}
-		ctx.Set("user", claims.Id) //与session统一
-		ctx.Next()
+	if tokenString == "" {
+		curd.Error(c, fmt.Errorf("UnAuthorized"))
+		c.Abort()
+		return
+	}
+	if !strings.HasPrefix(tokenString, "Bearer ") {
+		curd.Error(c, fmt.Errorf("令牌错误格式"))
+		c.Abort()
+		return
+	}
+	// 解析
+	claims, err := JwtVerify(tokenString[7:])
+	if err != nil {
+		curd.Error(c, fmt.Errorf("UnAuthorized err:%v", err.Error()))
+		c.Abort()
 		return
 	}
 
-	//检查Session
-	session := sessions.Default(ctx)
-	if user := session.Get("user"); user != nil {
-		ctx.Set("user", user)
-		ctx.Next()
+	//if claims.ExpiresAt < time.Now().Unix() {
+	//	curd.Error(c, fmt.Errorf("令牌已过期"))
+	//	c.Abort()
+	//	return
+	//}
+
+	if claims.Id == 0 {
+		session := sessions.Default(c)
+		if id := session.Get("user"); id == nil {
+			curd.Error(c, fmt.Errorf("令牌验证失败"))
+			c.Abort()
+			return
+		} else {
+			c.Set("user", id)
+			c.Next()
+		}
 	} else {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		ctx.Abort()
+		c.Set("user", claims.Id)
+		c.Next()
 	}
+
 }
 
 func Cors() gin.HandlerFunc {
@@ -77,16 +90,16 @@ func Cors() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
 func RegisterRoutes(router *gin.RouterGroup) {
 
 	//错误恢复，并返回至前端
-	router.Use(catchError)
 
 	router.POST("/login", login)
 
 	//检查 session，必须登录
 
-	router.Use(mustLogin)
+	router.Use(MustLogin)
 
 	router.GET("/logout", logout)
 	router.POST("/password", password)
@@ -112,7 +125,6 @@ func RegisterRoutes(router *gin.RouterGroup) {
 
 	hongbaoRouter(router.Group("/hongbao"))
 	qiangHongbaoRouter(router.Group("/hongbao/qiang"))
-	//TODO 报接口错误（以下代码不生效，路由好像不是树形处理）
 	router.Use(func(ctx *gin.Context) {
 		curd.Fail(ctx, "Not found")
 		ctx.Abort()
