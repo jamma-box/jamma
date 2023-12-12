@@ -16,9 +16,16 @@ func weixinAuthRouter(app *gin.RouterGroup) {
 }
 
 func weixinRouter(app *gin.RouterGroup) {
-	app.GET("/pre-order", weixinPreOrder)
+	app.GET("/pre-pay", weixinPrePay)
+	app.GET("/get-js", weixinGetJS)
 }
-func weixinPreOrder(ctx *gin.Context) {
+
+func weixinGetJS(ctx *gin.Context) {
+	js := weixin.GetOfficialAccount().GetJs()
+	curd.OK(ctx, js)
+}
+
+func weixinPrePay(ctx *gin.Context) {
 
 	var u types.User
 	_, err := db.Engine.ID(ctx.GetInt64("user")).Get(&u)
