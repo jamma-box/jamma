@@ -1,7 +1,7 @@
-appid: ""
-appsecret: ""
+appid: wxf9aba5e1b7018a74
+appsecret: dbe00aed904308e2874a7838f3667272
 pay:
-    appid: ""
-    mchid: ""
+    appid: wxf9aba5e1b7018a74
+    mchid: 1636930839
     key: ""
-    notifyurl: ""
+    notifyurl: https://gamebox.zgwit.cn/weixin_pay_notify
