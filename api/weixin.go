@@ -40,6 +40,8 @@ func weixinPrePay(ctx *gin.Context) {
 		return
 	}
 
+	log.Println("user", &u)
+
 	amount, err := strconv.Atoi(ctx.Query("amount"))
 	if err != nil {
 		curd.Error(ctx, err)
@@ -65,7 +67,7 @@ func weixinPrePay(ctx *gin.Context) {
 		OutTradeNo: strconv.Itoa(int(o.Id)),
 		OpenID:     u.OpenId,
 		TradeType:  "JSAPI",
-		Body:       "充值",
+		Body:       ctx.Query("name"),
 		//Detail:     "充值",
 		NotifyURL: "https://gamebox.zgwit.cn/pay_notify",
 	})
@@ -74,7 +76,7 @@ func weixinPrePay(ctx *gin.Context) {
 		return
 	}
 
-	curd.OK(ctx, ord)
+	curd.OK(ctx, &ord)
 }
 
 func weixinAuth(ctx *gin.Context) {
