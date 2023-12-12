@@ -5,6 +5,7 @@ import (
 	"arcade/chat"
 	"arcade/config"
 	"arcade/types"
+	"arcade/weixin"
 	"embed"
 	"github.com/zgwit/iot-master/v3/pkg/db"
 	"github.com/zgwit/iot-master/v3/pkg/log"
@@ -38,6 +39,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	//微信接口
+	weixin.Open()
 
 	//原本的Main函数
 	engine := web.CreateEngine()
