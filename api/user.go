@@ -157,7 +157,7 @@ func userRouter(app *gin.RouterGroup) {
 }
 
 func userMe(ctx *gin.Context) {
-	id := ctx.GetString("user")
+	id := ctx.GetInt64("user")
 	var user types.User
 	has, err := db.Engine.ID(id).Get(&user)
 	if err != nil {

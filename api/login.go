@@ -91,14 +91,17 @@ func login(ctx *gin.Context) {
 	//存入session
 	session.Set("user", user.Id)
 	_ = session.Save()
+
 	token, err := JwtGenerate(user.Id)
 	if err != nil {
 		curd.Error(ctx, err)
 		return
 	}
+
 	res := make(map[string]interface{}, 2)
 	res["user"] = user
 	res["token"] = token
+
 	curd.OK(ctx, res)
 }
 

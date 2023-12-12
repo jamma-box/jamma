@@ -96,13 +96,17 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	//错误恢复，并返回至前端
 
 	router.POST("/login", login)
+	router.GET("/weixin/auth", weixinAuth)
 
 	//检查 session，必须登录
 
 	router.Use(MustLogin)
 
 	router.GET("/logout", logout)
+
 	router.POST("/password", password)
+
+	weixinRouter(router.Group("/weixin"))
 
 	//注册子接口
 	userRouter(router.Group("/user"))
@@ -124,7 +128,9 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	emailRouter(router.Group("/email"))
 
 	hongbaoRouter(router.Group("/hongbao"))
+
 	qiangHongbaoRouter(router.Group("/hongbao/qiang"))
+
 	router.Use(func(ctx *gin.Context) {
 		curd.Fail(ctx, "Not found")
 		ctx.Abort()

@@ -30,15 +30,20 @@ func main() {
 		log.Fatal(err)
 	}
 
-	db.Engine.Sync2(new(types.Email), new(types.Game),
+	err = db.Engine.Sync2(new(types.Email), new(types.Game),
 		new(types.Box), new(types.Recharge),
 		new(types.SignIn), new(types.User),
 		new(types.Me), new(types.Password), new(types.UserHistory),
 		new(chat.RedPacket), new(chat.GrabPacket))
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	//原本的Main函数
 	engine := web.CreateEngine()
 	engine.Use(api.Cors())
 	engine.Use(api.CatchError)
+
 	//注册前端接口
 	api.RegisterRoutes(engine.Group("/api"))
 
