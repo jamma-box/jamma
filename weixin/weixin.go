@@ -27,17 +27,15 @@ func Open() {
 	ca := cache.NewMemory()
 
 	oa = wc.GetOfficialAccount(&oaConfig.Config{
-		AppID:          "",
-		AppSecret:      "",
-		Token:          "",
-		EncodingAESKey: "",
-		Cache:          ca,
+		AppID:     options.AppId,
+		AppSecret: options.AppSecret,
+		Cache:     ca,
 	})
 
 	py = wc.GetPay(&payConfig.Config{
-		AppID:     "",
-		MchID:     "",
-		Key:       "",
-		NotifyURL: "",
+		AppID:     options.Pay.AppId,
+		MchID:     options.Pay.MchId,
+		Key:       options.Pay.Key,
+		NotifyURL: options.Pay.NotifyUrl,
 	})
 }
