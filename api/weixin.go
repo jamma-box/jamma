@@ -22,7 +22,12 @@ func weixinRouter(app *gin.RouterGroup) {
 
 func weixinGetJS(ctx *gin.Context) {
 	js := weixin.GetOfficialAccount().GetJs()
-	curd.OK(ctx, js)
+	config, err := js.GetConfig(ctx.Query("url"))
+	if err != nil {
+		curd.Error(ctx, err)
+		return
+	}
+	curd.OK(ctx, config)
 }
 
 func weixinPrePay(ctx *gin.Context) {
@@ -57,6 +62,7 @@ func weixinPrePay(ctx *gin.Context) {
 		OutTradeNo: strconv.Itoa(int(o.Id)),
 		OpenID:     u.OpenId,
 		TradeType:  "JSAPI",
+		Body:       "充值",
 		Detail:     "充值",
 		NotifyURL:  "https://gamebox.zgwit.cn/pay_notify",
 	})
