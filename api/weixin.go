@@ -7,7 +7,6 @@ import (
 	"github.com/silenceper/wechat/v2/pay/order"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"github.com/zgwit/iot-master/v3/pkg/db"
-	"log"
 	"strconv"
 )
 
@@ -40,7 +39,7 @@ func weixinPrePay(ctx *gin.Context) {
 		return
 	}
 
-	log.Println("user", &u)
+	//log.Println("user", &u)
 
 	amount, err := strconv.Atoi(ctx.Query("amount"))
 	if err != nil {
@@ -59,9 +58,10 @@ func weixinPrePay(ctx *gin.Context) {
 		return
 	}
 
-	log.Println("order", &o)
-
-	ord, err := weixin.GetPay().GetOrder().PrePayOrder(&order.Params{
+	//log.Println("order", &o)
+	od := weixin.GetPay().GetOrder()
+	//ord, err := od.PrePayOrder(&order.Params{
+	ord, err := od.BridgeConfig(&order.Params{
 		TotalFee:   strconv.Itoa(amount),
 		CreateIP:   "127.0.0.1",
 		OutTradeNo: strconv.Itoa(int(o.Id)),
@@ -69,6 +69,7 @@ func weixinPrePay(ctx *gin.Context) {
 		TradeType:  "JSAPI",
 		Body:       ctx.Query("name"),
 		//Detail:     "充值",
+		//SignType:  "RSA",
 		NotifyURL: "https://gamebox.zgwit.cn/pay_notify",
 	})
 	if err != nil {
