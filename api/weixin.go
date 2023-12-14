@@ -77,7 +77,13 @@ func weixinPrePay(ctx *gin.Context) {
 		return
 	}
 
-	curd.OK(ctx, &ord)
+	curd.OK(ctx, gin.H{
+		"appId":     od.AppID,
+		"nonceStr":  ord.NonceStr,
+		"package":   ord.PrePayID,
+		"signType":  ord.SignType,
+		"timeStamp": ord.Timestamp,
+	})
 }
 
 func weixinAuth(ctx *gin.Context) {
@@ -118,5 +124,18 @@ func weixinAuth(ctx *gin.Context) {
 		}
 	}
 
-	curd.OK(ctx, user)
+	tkn, err := JwtGenerate(user.Id)
+	if err != nil {
+		curd.Error(ctx, err)
+		return
+	}
+
+	res := make(map[string]interface{}, 2)
+	res["user"] = user
+	res["token"] = tkn
+
+	curd.OK(ctx, gin.H{
+		"user":  user,
+		"token": tkn,
+	})
 }
