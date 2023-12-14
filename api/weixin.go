@@ -80,9 +80,10 @@ func weixinPrePay(ctx *gin.Context) {
 	curd.OK(ctx, gin.H{
 		"appId":     od.AppID,
 		"nonceStr":  ord.NonceStr,
-		"package":   ord.PrePayID,
+		"package":   "prepay_id=" + ord.PrePayID,
 		"signType":  ord.SignType,
 		"timeStamp": ord.Timestamp,
+		"paySign":   ord.PaySign,
 	})
 }
 
