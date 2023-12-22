@@ -98,8 +98,11 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	router.POST("/login", login)
 	router.GET("/weixin/auth", weixinAuth)
 
-	//检查 session，必须登录
+	//游戏机
+	router.GET("/box/:id/live", curd.ParseParamStringId, boxLive)
+	router.GET("/box/:id/pad", curd.ParseParamStringId, boxPad)
 
+	//检查 session，必须登录
 	router.Use(MustLogin)
 
 	router.GET("/logout", logout)

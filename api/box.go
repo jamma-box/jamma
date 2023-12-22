@@ -160,39 +160,40 @@ func boxRouter(app *gin.RouterGroup) {
 		b.Bridge(c)
 	})
 
-	app.GET("/:id/live", curd.ParseParamStringId, func(ctx *gin.Context) {
-		b := box.Get(ctx.Param("id"))
-		if b == nil {
-			curd.Fail(ctx, "找不到设备")
-			return
-		}
-
-		c, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
-		if err != nil {
-			curd.Error(ctx, err)
-			return
-		}
-		defer c.Close()
-
-		b.Live(c)
-	})
-
-	app.GET("/:id/pad", curd.ParseParamStringId, func(ctx *gin.Context) {
-		b := box.Get(ctx.Param("id"))
-		if b == nil {
-			curd.Fail(ctx, "找不到设备")
-			return
-		}
-
-		c, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
-		if err != nil {
-			curd.Error(ctx, err)
-			return
-		}
-		defer c.Close()
-
-		b.Pad(c)
-	})
 }
 
 var upgrader = websocket.Upgrader{} // use default options
+
+func boxLive(ctx *gin.Context) {
+	b := box.Get(ctx.Param("id"))
+	if b == nil {
+		curd.Fail(ctx, "找不到设备")
+		return
+	}
+
+	c, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
+	if err != nil {
+		curd.Error(ctx, err)
+		return
+	}
+	defer c.Close()
+
+	b.Live(c)
+}
+
+func boxPad(ctx *gin.Context) {
+	b := box.Get(ctx.Param("id"))
+	if b == nil {
+		curd.Fail(ctx, "找不到设备")
+		return
+	}
+
+	c, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
+	if err != nil {
+		curd.Error(ctx, err)
+		return
+	}
+	defer c.Close()
+
+	b.Pad(c)
+}
