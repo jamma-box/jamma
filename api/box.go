@@ -1,9 +1,12 @@
 package api
 
 import (
+	"arcade/box"
 	"arcade/types"
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
+	"strconv"
 )
 
 // @Summary 查询游戏机数量
@@ -101,7 +104,92 @@ func boxRouter(app *gin.RouterGroup) {
 
 	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.Box](nil, nil))
 
-	app.GET(":id/disable", curd.ParseParamId, curd.ApiDisableHook[types.Box](true, nil, nil))
+	app.GET("/:id/disable", curd.ParseParamId, curd.ApiDisableHook[types.Box](true, nil, nil))
 
-	app.GET(":id/enable", curd.ParseParamId, curd.ApiDisableHook[types.Box](false, nil, nil))
+	app.GET("/:id/enable", curd.ParseParamId, curd.ApiDisableHook[types.Box](false, nil, nil))
+
+	app.GET("/:id/seat/:seat", curd.ParseParamId, func(ctx *gin.Context) {
+		b := box.Get(ctx.Param("id"))
+		if b == nil {
+			curd.Fail(ctx, "找不到设备")
+			return
+		}
+
+		seat, err := strconv.Atoi(ctx.Param("seat"))
+		if err != nil {
+			curd.Error(ctx, err)
+			return
+		}
+
+		if b.Seats[seat].UserId != 0 {
+			//TODO 判断位置重复
+			curd.Fail(ctx, "已占位")
+			return
+		}
+
+		//坐下
+		b.Seats[seat].UserId = ctx.GetInt64("user")
+
+		c, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
+		if err != nil {
+			curd.Error(ctx, err)
+			return
+		}
+		defer c.Close()
+
+		b.Seat(c, seat)
+	})
+
+	app.GET("/:id/bridge", curd.ParseParamId, func(ctx *gin.Context) {
+		b := box.Get(ctx.Param("id"))
+		if b == nil {
+			curd.Fail(ctx, "找不到设备")
+			return
+		}
+
+		c, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
+		if err != nil {
+			curd.Error(ctx, err)
+			return
+		}
+		defer c.Close()
+
+		b.Bridge(c)
+	})
+
+	app.GET("/:id/live", curd.ParseParamId, func(ctx *gin.Context) {
+		b := box.Get(ctx.Param("id"))
+		if b == nil {
+			curd.Fail(ctx, "找不到设备")
+			return
+		}
+
+		c, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
+		if err != nil {
+			curd.Error(ctx, err)
+			return
+		}
+		defer c.Close()
+
+		b.Live(c)
+	})
+
+	app.GET("/:id/pad", curd.ParseParamId, func(ctx *gin.Context) {
+		b := box.Get(ctx.Param("id"))
+		if b == nil {
+			curd.Fail(ctx, "找不到设备")
+			return
+		}
+
+		c, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
+		if err != nil {
+			curd.Error(ctx, err)
+			return
+		}
+		defer c.Close()
+
+		b.Pad(c)
+	})
 }
+
+var upgrader = websocket.Upgrader{} // use default options
