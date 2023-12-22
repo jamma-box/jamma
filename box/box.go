@@ -7,10 +7,12 @@ import (
 	"github.com/zgwit/iot-master/v3/pkg/db"
 	"github.com/zgwit/iot-master/v3/pkg/lib"
 	"log"
+	"time"
 )
 
 type Seat struct {
 	UserId int64
+	Client *websocket.Conn
 }
 
 type Box struct {
@@ -106,7 +108,9 @@ func (b *Box) Pad(c *websocket.Conn) {
 	}
 }
 
-func (b *Box) Seat(c *websocket.Conn, seat int) {
+func (b *Box) Seat(seat int, c *websocket.Conn, user int64) {
+	b.Seats[seat].UserId = user
+	b.Seats[seat].Client = c
 
 	for {
 		mt, message, err := c.ReadMessage()
@@ -121,10 +125,48 @@ func (b *Box) Seat(c *websocket.Conn, seat int) {
 		}
 		b.mt = mt
 	}
+
+	b.Seats[seat].Client = nil
+
+	//超时退出
+	time.AfterFunc(time.Minute, func() {
+		if b.Seats[seat].Client != nil {
+			return
+		}
+
+		_ = b.gamePad.WriteJSON(map[string]any{
+			"seat": seat,
+			"type": "stand",
+		})
+
+		if b.Seats[seat].UserId != 0 {
+			//应该下分???
+		}
+	})
 }
 
 var boxes lib.Map[Box]
 
 func Get(id string) *Box {
-	return boxes.Load(id)
+	b := boxes.Load(id)
+	if b == nil {
+		var bb types.Box
+		has, err := db.Engine.ID(id).Get(&bb)
+		if err != nil {
+			log.Println(err)
+			return nil
+		}
+		//自动创建
+		if !has {
+			_, err := db.Engine.InsertOne(&bb)
+			if err != nil {
+				log.Println(err)
+				return nil
+			}
+		}
+		b = New(&bb)
+	}
+	boxes.Store(id, b)
+
+	return b
 }

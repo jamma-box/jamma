@@ -57,7 +57,7 @@ func noopBoxCreate() {}
 // @Schemes
 // @Description 获取游戏机
 // @Tags box
-// @Param id path int true "游戏机ID"
+// @Param id path string true "游戏机ID"
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.Box] 返回游戏机信息
@@ -68,7 +68,7 @@ func noopBoxGet() {}
 // @Schemes
 // @Description 修改游戏机
 // @Tags box
-// @Param id path int true "游戏机ID"
+// @Param id path string true "游戏机ID"
 // @Param box body types.Box true "游戏机信息"
 // @Accept json
 // @Produce json
@@ -80,7 +80,7 @@ func noopBoxUpdate() {}
 // @Schemes
 // @Description 删除游戏机
 // @Tags box
-// @Param id path int true "游戏机ID"
+// @Param id path string true "游戏机ID"
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.Box] 返回游戏机信息
@@ -95,20 +95,20 @@ func boxRouter(app *gin.RouterGroup) {
 
 	app.GET("/list", curd.ApiList[types.Box]())
 
-	app.POST("/create", curd.ApiCreateHook[types.Box](nil, nil))
+	app.POST("/create", curd.ApiCreateHook[types.Box](curd.GenerateRandomId[types.Box](10), nil))
 
-	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Box]())
+	app.GET("/:id", curd.ParseParamStringId, curd.ApiGet[types.Box]())
 
-	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.Box](nil, nil,
+	app.POST("/:id", curd.ParseParamStringId, curd.ApiUpdateHook[types.Box](nil, nil,
 		"name", "desc", "icon", "type", "disabled", "game_id"))
 
-	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.Box](nil, nil))
+	app.GET("/:id/delete", curd.ParseParamStringId, curd.ApiDeleteHook[types.Box](nil, nil))
 
-	app.GET("/:id/disable", curd.ParseParamId, curd.ApiDisableHook[types.Box](true, nil, nil))
+	app.GET("/:id/disable", curd.ParseParamStringId, curd.ApiDisableHook[types.Box](true, nil, nil))
 
-	app.GET("/:id/enable", curd.ParseParamId, curd.ApiDisableHook[types.Box](false, nil, nil))
+	app.GET("/:id/enable", curd.ParseParamStringId, curd.ApiDisableHook[types.Box](false, nil, nil))
 
-	app.GET("/:id/seat/:seat", curd.ParseParamId, func(ctx *gin.Context) {
+	app.GET("/:id/seat/:seat", curd.ParseParamStringId, func(ctx *gin.Context) {
 		b := box.Get(ctx.Param("id"))
 		if b == nil {
 			curd.Fail(ctx, "找不到设备")
@@ -121,14 +121,17 @@ func boxRouter(app *gin.RouterGroup) {
 			return
 		}
 
-		if b.Seats[seat].UserId != 0 {
-			//TODO 判断位置重复
+		//坐下
+		user := ctx.GetInt64("user")
+		if b.Seats[seat].Client != nil {
 			curd.Fail(ctx, "已占位")
 			return
 		}
 
-		//坐下
-		b.Seats[seat].UserId = ctx.GetInt64("user")
+		if b.Seats[seat].UserId != 0 && b.Seats[seat].UserId != user {
+			curd.Fail(ctx, "已占位")
+			return
+		}
 
 		c, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
 		if err != nil {
@@ -137,10 +140,10 @@ func boxRouter(app *gin.RouterGroup) {
 		}
 		defer c.Close()
 
-		b.Seat(c, seat)
+		b.Seat(seat, c, user)
 	})
 
-	app.GET("/:id/bridge", curd.ParseParamId, func(ctx *gin.Context) {
+	app.GET("/:id/bridge", curd.ParseParamStringId, func(ctx *gin.Context) {
 		b := box.Get(ctx.Param("id"))
 		if b == nil {
 			curd.Fail(ctx, "找不到设备")
@@ -157,7 +160,7 @@ func boxRouter(app *gin.RouterGroup) {
 		b.Bridge(c)
 	})
 
-	app.GET("/:id/live", curd.ParseParamId, func(ctx *gin.Context) {
+	app.GET("/:id/live", curd.ParseParamStringId, func(ctx *gin.Context) {
 		b := box.Get(ctx.Param("id"))
 		if b == nil {
 			curd.Fail(ctx, "找不到设备")
@@ -174,7 +177,7 @@ func boxRouter(app *gin.RouterGroup) {
 		b.Live(c)
 	})
 
-	app.GET("/:id/pad", curd.ParseParamId, func(ctx *gin.Context) {
+	app.GET("/:id/pad", curd.ParseParamStringId, func(ctx *gin.Context) {
 		b := box.Get(ctx.Param("id"))
 		if b == nil {
 			curd.Fail(ctx, "找不到设备")

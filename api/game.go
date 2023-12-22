@@ -54,7 +54,7 @@ func noopGameCreate() {}
 // @Schemes
 // @Description 获取游戏厅
 // @Tags game
-// @Param id path int true "游戏厅ID"
+// @Param id path string true "游戏厅ID"
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.Game] 返回游戏厅信息
@@ -65,7 +65,7 @@ func noopGameGet() {}
 // @Schemes
 // @Description 修改游戏厅
 // @Tags game
-// @Param id path int true "游戏厅ID"
+// @Param id path string true "游戏厅ID"
 // @Param game body types.Game true "游戏厅信息"
 // @Accept json
 // @Produce json
@@ -77,7 +77,7 @@ func noopGameUpdate() {}
 // @Schemes
 // @Description 删除游戏厅
 // @Tags game
-// @Param id path int true "游戏厅ID"
+// @Param id path string true "游戏厅ID"
 // @Accept json
 // @Produce json
 // @Success 200 {object} ReplyData[types.Game] 返回游戏厅信息
@@ -92,16 +92,16 @@ func gameRouter(app *gin.RouterGroup) {
 
 	app.GET("/list", curd.ApiList[types.Game]())
 
-	app.POST("/create", curd.ApiCreateHook[types.Game](nil, nil))
+	app.POST("/create", curd.ApiCreateHook[types.Game](curd.GenerateRandomId[types.Game](8), nil))
 
-	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Game]())
+	app.GET("/:id", curd.ParseParamStringId, curd.ApiGet[types.Game]())
 
-	app.POST("/:id", curd.ParseParamId, curd.ApiUpdateHook[types.Game](nil, nil,
+	app.POST("/:id", curd.ParseParamStringId, curd.ApiUpdateHook[types.Game](nil, nil,
 		"name", "desc", "icon", "type", "disabled"))
 
-	app.GET("/:id/delete", curd.ParseParamId, curd.ApiDeleteHook[types.Game](nil, nil))
+	app.GET("/:id/delete", curd.ParseParamStringId, curd.ApiDeleteHook[types.Game](nil, nil))
 
-	app.GET(":id/disable", curd.ParseParamId, curd.ApiDisableHook[types.Game](true, nil, nil))
+	app.GET(":id/disable", curd.ParseParamStringId, curd.ApiDisableHook[types.Game](true, nil, nil))
 
-	app.GET(":id/enable", curd.ParseParamId, curd.ApiDisableHook[types.Game](false, nil, nil))
+	app.GET(":id/enable", curd.ParseParamStringId, curd.ApiDisableHook[types.Game](false, nil, nil))
 }

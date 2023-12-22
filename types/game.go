@@ -3,7 +3,7 @@ package types
 import "time"
 
 type Game struct {
-	Id       int64     `json:"id,omitempty" form:"id"`
+	Id       string    `json:"id,omitempty" xorm:"pk" form:"id"`
 	Icon     string    `json:"icon,omitempty" form:"icon"` //图标
 	Name     string    `json:"name,omitempty" form:"name"` //名称
 	Desc     string    `json:"desc,omitempty" form:"desc"` //说明
