@@ -1,12 +1,9 @@
 package api
 
 import (
-	"fmt"
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"net/http"
-	"strings"
 )
 
 func CatchError(ctx *gin.Context) {
@@ -27,27 +24,25 @@ func CatchError(ctx *gin.Context) {
 	ctx.Next()
 }
 
-func MustLogin(c *gin.Context) {
-	// 检查有没有Bearer前缀
-	tokenString := c.GetHeader("Authorization")
-	if tokenString == "" {
-		tokenString = c.GetHeader("authorization")
+func MustLogin(ctx *gin.Context) {
+	token := ctx.Request.URL.Query().Get("token")
+	if token == "" {
+		token = ctx.Request.Header.Get("Authorization")
+		if token != "" {
+			//此处需要去掉 Bearer
+			token = token[7:]
+		}
 	}
-	if tokenString == "" {
-		curd.Error(c, fmt.Errorf("UnAuthorized"))
-		c.Abort()
-		return
-	}
-	if !strings.HasPrefix(tokenString, "Bearer ") {
-		curd.Error(c, fmt.Errorf("令牌错误格式"))
-		c.Abort()
-		return
-	}
-	// 解析
-	claims, err := JwtVerify(tokenString[7:])
-	if err != nil {
-		curd.Error(c, fmt.Errorf("UnAuthorized err:%v", err.Error()))
-		c.Abort()
+
+	if token != "" {
+		claims, err := JwtVerify(token)
+		if err != nil {
+			ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+			ctx.Abort()
+		} else {
+			ctx.Set("user", claims.Id) //与session统一
+			ctx.Next()
+		}
 		return
 	}
 
@@ -57,21 +52,8 @@ func MustLogin(c *gin.Context) {
 	//	return
 	//}
 
-	if claims.Id == 0 {
-		session := sessions.Default(c)
-		if id := session.Get("user"); id == nil {
-			curd.Error(c, fmt.Errorf("令牌验证失败"))
-			c.Abort()
-			return
-		} else {
-			c.Set("user", id)
-			c.Next()
-		}
-	} else {
-		c.Set("user", claims.Id)
-		c.Next()
-	}
-
+	curd.Fail(ctx, "令牌验证失败")
+	ctx.Abort()
 }
 
 func Cors() gin.HandlerFunc {

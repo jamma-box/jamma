@@ -6,7 +6,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/zgwit/iot-master/v3/pkg/db"
 	"github.com/zgwit/iot-master/v3/pkg/lib"
-	"log"
+	"github.com/zgwit/iot-master/v3/pkg/log"
 	"time"
 )
 
@@ -49,12 +49,16 @@ func (b *Box) Bridge(c *websocket.Conn) {
 			log.Println("read:", err)
 			break
 		}
-		err = b.gameLive.WriteMessage(mt, message)
-		if err != nil {
-			log.Println("write:", err)
-			return
-		}
+		log.Println("bridge", string(message))
+
 		b.mt = mt
+		if b.gameLive != nil {
+			err = b.gameLive.WriteMessage(mt, message)
+			if err != nil {
+				log.Println("write:", err)
+				return
+			}
+		}
 	}
 	b.client = nil
 }
@@ -67,6 +71,8 @@ func (b *Box) Live(c *websocket.Conn) {
 			log.Println(err)
 			break
 		}
+		log.Println("live", string(message))
+
 		if b.client != nil {
 			err = b.client.WriteMessage(mt, message)
 			if err != nil {
@@ -75,6 +81,7 @@ func (b *Box) Live(c *websocket.Conn) {
 			}
 		}
 	}
+	b.gameLive = nil
 }
 
 func (b *Box) Pad(c *websocket.Conn) {
@@ -84,6 +91,7 @@ func (b *Box) Pad(c *websocket.Conn) {
 			log.Println(err)
 			break
 		}
+		log.Println("pad", string(message))
 
 		var cmd PadCommand
 		err = json.Unmarshal(message, &cmd)
@@ -118,12 +126,16 @@ func (b *Box) Seat(seat int, c *websocket.Conn, user int64) {
 			log.Println("read:", err)
 			break
 		}
-		err = b.gamePad.WriteMessage(mt, message)
-		if err != nil {
-			log.Println("write:", err)
-			return
-		}
+		log.Println("seat", string(message))
+
 		b.mt = mt
+		if b.gamePad != nil {
+			err = b.gamePad.WriteMessage(mt, message)
+			if err != nil {
+				log.Println("write:", err)
+				return
+			}
+		}
 	}
 
 	b.Seats[seat].Client = nil

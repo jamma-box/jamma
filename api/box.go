@@ -109,7 +109,7 @@ func boxRouter(app *gin.RouterGroup) {
 	app.GET("/:id/enable", curd.ParseParamStringId, curd.ApiDisableHook[types.Box](false, nil, nil))
 
 	app.GET("/:id/seat/:seat", curd.ParseParamStringId, func(ctx *gin.Context) {
-		b := box.Get(ctx.Param("id"))
+		b := box.Get(ctx.GetString("id"))
 		if b == nil {
 			curd.Fail(ctx, "找不到设备")
 			return
@@ -144,7 +144,7 @@ func boxRouter(app *gin.RouterGroup) {
 	})
 
 	app.GET("/:id/bridge", curd.ParseParamStringId, func(ctx *gin.Context) {
-		b := box.Get(ctx.Param("id"))
+		b := box.Get(ctx.GetString("id"))
 		if b == nil {
 			curd.Fail(ctx, "找不到设备")
 			return
@@ -165,7 +165,7 @@ func boxRouter(app *gin.RouterGroup) {
 var upgrader = websocket.Upgrader{} // use default options
 
 func boxLive(ctx *gin.Context) {
-	b := box.Get(ctx.Param("id"))
+	b := box.Get(ctx.GetString("id"))
 	if b == nil {
 		curd.Fail(ctx, "找不到设备")
 		return
@@ -182,7 +182,7 @@ func boxLive(ctx *gin.Context) {
 }
 
 func boxPad(ctx *gin.Context) {
-	b := box.Get(ctx.Param("id"))
+	b := box.Get(ctx.GetString("id"))
 	if b == nil {
 		curd.Fail(ctx, "找不到设备")
 		return

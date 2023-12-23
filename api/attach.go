@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-const AttachRoot = "static"
+const AttachRoot = "www/static"
 
 type attachInfo struct {
 	Name   string    `json:"name,omitempty"`

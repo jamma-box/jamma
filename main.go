@@ -7,9 +7,11 @@ import (
 	"arcade/types"
 	"arcade/weixin"
 	"embed"
+	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/db"
 	"github.com/zgwit/iot-master/v3/pkg/log"
 	"github.com/zgwit/iot-master/v3/pkg/web"
+	"golang.org/x/crypto/acme/autocert"
 	"net/http"
 )
 
@@ -60,11 +62,40 @@ func main() {
 	//附件
 	//engine.Static("/attach", "attach")
 	//静态文件
-	engine.Static("/static", "static")
+	//engine.Static("/static", "static")
+
 	//注册静态页面
 	fs := engine.FileSystem()
-	fs.Put("", http.FS(wwwFiles), "www", "index.html")
+	//fs.Put("", http.FS(wwwFiles), "www", "index.html")
+	fs.Put("", gin.Dir("www", false), "", "index.html")
+
+	//engine.Static("/", "www")
 
 	//启动
-	engine.Serve()
+	go engine.Serve()
+
+	/////////////////////////
+	/////改用LetsEncrypt//////
+	////////////////////////
+
+	//初始化autocert
+	manager := &autocert.Manager{
+		Cache:      autocert.DirCache("certs"),
+		Email:      "jason@zgwit.com",
+		HostPolicy: autocert.HostWhitelist("gamebox.zgwit.cn"),
+		Prompt:     autocert.AcceptTOS,
+	}
+
+	//创建server
+	svr := &http.Server{
+		Addr:      "0.0.0.0:443",
+		TLSConfig: manager.TLSConfig(),
+		Handler:   engine,
+	}
+
+	//监听https
+	err = svr.ListenAndServeTLS("", "")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
