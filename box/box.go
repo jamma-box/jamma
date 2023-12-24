@@ -85,6 +85,7 @@ func (b *Box) Live(c *websocket.Conn) {
 }
 
 func (b *Box) Pad(c *websocket.Conn) {
+	b.gamePad = c
 	for {
 		_, message, err := c.ReadMessage()
 		if err != nil {
@@ -114,6 +115,7 @@ func (b *Box) Pad(c *websocket.Conn) {
 			}
 		}
 	}
+	b.gamePad = nil
 }
 
 func (b *Box) Seat(seat int, c *websocket.Conn, user int64) {
@@ -146,10 +148,12 @@ func (b *Box) Seat(seat int, c *websocket.Conn, user int64) {
 			return
 		}
 
-		_ = b.gamePad.WriteJSON(map[string]any{
-			"seat": seat,
-			"type": "stand",
-		})
+		if b.gamePad != nil {
+			_ = b.gamePad.WriteJSON(map[string]any{
+				"seat": seat,
+				"type": "stand",
+			})
+		}
 
 		if b.Seats[seat].UserId != 0 {
 			//应该下分???
