@@ -108,6 +108,16 @@ func boxRouter(app *gin.RouterGroup) {
 
 	app.GET("/:id/enable", curd.ParseParamStringId, curd.ApiDisableHook[types.Box](false, nil, nil))
 
+	app.GET("/:id/status", curd.ParseParamStringId, func(ctx *gin.Context) {
+		b := box.Get(ctx.GetString("id"))
+		if b == nil {
+			curd.Fail(ctx, "找不到设备")
+			return
+		}
+
+		curd.OK(ctx, b.Seats)
+	})
+
 	app.GET("/:id/seat/:seat", curd.ParseParamStringId, func(ctx *gin.Context) {
 		b := box.Get(ctx.GetString("id"))
 		if b == nil {
@@ -141,6 +151,25 @@ func boxRouter(app *gin.RouterGroup) {
 		defer c.Close()
 
 		b.Seat(seat, c, user)
+	})
+
+	app.GET("/:id/stand/:seat", curd.ParseParamStringId, func(ctx *gin.Context) {
+		b := box.Get(ctx.GetString("id"))
+		if b == nil {
+			curd.Fail(ctx, "找不到设备")
+			return
+		}
+
+		seat, err := strconv.Atoi(ctx.Param("seat"))
+		if err != nil {
+			curd.Error(ctx, err)
+			return
+		}
+
+		//站立
+		b.Seats[seat].UserId = 0
+
+		curd.OK(ctx, nil)
 	})
 
 	app.GET("/:id/bridge", curd.ParseParamStringId, func(ctx *gin.Context) {

@@ -7,8 +7,11 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/googollee/go-socket.io v1.7.0
+	github.com/gorilla/websocket v1.5.1
+	github.com/silenceper/wechat/v2 v2.1.6
 	github.com/swaggo/swag v1.16.2
 	github.com/zgwit/iot-master/v3 v3.4.24
+	golang.org/x/crypto v0.17.0
 )
 
 require (
@@ -46,7 +49,6 @@ require (
 	github.com/gorilla/context v1.1.2 // indirect
 	github.com/gorilla/securecookie v1.1.2 // indirect
 	github.com/gorilla/sessions v1.2.2 // indirect
-	github.com/gorilla/websocket v1.5.1 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.6 // indirect
@@ -58,8 +60,6 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.1 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
-	github.com/silenceper/wechat v1.2.6 // indirect
-	github.com/silenceper/wechat/v2 v2.1.6 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/cast v1.4.1 // indirect
 	github.com/swaggo/gin-swagger v1.6.0 // indirect
@@ -71,7 +71,6 @@ require (
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	github.com/zgwit/swagger-files v1.0.0 // indirect
 	golang.org/x/arch v0.6.0 // indirect
-	golang.org/x/crypto v0.17.0 // indirect
 	golang.org/x/net v0.19.0 // indirect
 	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect

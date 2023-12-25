@@ -11,8 +11,8 @@ import (
 )
 
 type Seat struct {
-	UserId int64
-	Client *websocket.Conn
+	UserId int64           `json:"user_id"`
+	Client *websocket.Conn `json:"-"`
 }
 
 type Box struct {
