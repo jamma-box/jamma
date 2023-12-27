@@ -116,6 +116,7 @@ func boxRouter(app *gin.RouterGroup) {
 		}
 
 		curd.OK(ctx, b.Seats)
+		//curd.OK(ctx, nil)
 	})
 
 	app.GET("/:id/seat/:seat", curd.ParseParamStringId, func(ctx *gin.Context) {

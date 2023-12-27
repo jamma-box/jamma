@@ -157,6 +157,8 @@ func (b *Box) Seat(seat int, c *websocket.Conn, user int64) {
 
 		if b.Seats[seat].UserId != 0 {
 			//应该下分???
+
+			b.Seats[seat].UserId = 0
 		}
 	})
 }
