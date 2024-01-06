@@ -35,9 +35,9 @@ func New(b *types.Box) *Box {
 }
 
 type PadCommand struct {
-	Seat   int
-	Type   string
-	Refund int
+	Seat int    `json:"seat,omitempty"`
+	Type string `json:"type,omitempty"`
+	Coin int    `json:"coin,omitempty"`
 }
 
 func (b *Box) Bridge(c *websocket.Conn) {
@@ -86,7 +86,10 @@ func (b *Box) Live(c *websocket.Conn) {
 
 func (b *Box) Pad(c *websocket.Conn) {
 	b.gamePad = c
-	msg := make([]byte, 0)
+	//msg := make([]byte, 0)
+	var msg []byte
+	last := time.Now().UnixMilli()
+
 	for {
 		_, message, err := c.ReadMessage()
 		if err != nil {
@@ -95,20 +98,26 @@ func (b *Box) Pad(c *websocket.Conn) {
 		}
 		log.Println("pad", string(message))
 
-		if len(msg) > 0 {
-			message = append(msg, message...)
+		//拼接历史数据
+		now := time.Now().UnixMilli()
+		if len(msg) > 0 && now-last < 500 {
+			msg = append(msg, message...)
+		} else {
+			msg = message
 		}
+		last = now
+
 		var cmd PadCommand
-		err = json.Unmarshal(message, &cmd)
+		err = json.Unmarshal(msg, &cmd)
 		if err != nil {
 			log.Println(err)
-			msg = append(msg, message...)
 			continue
 		}
-		msg = make([]byte, 0)
+		msg = nil //解析成功，清空
 
 		//处理退分
 		if cmd.Type == "refund" {
+			log.Println("refund", cmd.Coin)
 			var user types.User
 			has, err := db.Engine.ID(b.Seats[cmd.Seat].UserId).Get(&user)
 			if err != nil {
@@ -116,7 +125,7 @@ func (b *Box) Pad(c *websocket.Conn) {
 				continue
 			}
 			if has {
-				user.Balance = user.Balance + float64(cmd.Refund)
+				user.Balance = user.Balance + float64(cmd.Coin)
 				_, _ = db.Engine.ID(user.Id).Cols("balance").Update(&user)
 			}
 		}
@@ -149,7 +158,7 @@ func (b *Box) Seat(seat int, c *websocket.Conn, user int64) {
 	b.Seats[seat].Client = nil
 
 	//超时退出
-	time.AfterFunc(time.Minute, func() {
+	time.AfterFunc(time.Minute*2, func() {
 		if b.Seats[seat].Client != nil {
 			return
 		}
