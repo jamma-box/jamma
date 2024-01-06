@@ -86,8 +86,7 @@ func (b *Box) Live(c *websocket.Conn) {
 
 func (b *Box) Pad(c *websocket.Conn) {
 	b.gamePad = c
-	var msg []byte
-	var tip bool
+	msg := make([]byte, 0)
 	for {
 		_, message, err := c.ReadMessage()
 		if err != nil {
@@ -97,22 +96,16 @@ func (b *Box) Pad(c *websocket.Conn) {
 		log.Println("pad", string(message))
 
 		if len(msg) > 0 {
-			//上一次json解析成功则清空msg缓存，如果上次一直有json解析错误则一直拼接下去直到解析成功
-			if !tip {
-				msg = []byte{}
-			}
 			message = append(msg, message...)
 		}
 		var cmd PadCommand
 		err = json.Unmarshal(message, &cmd)
 		if err != nil {
 			log.Println(err)
-			msg = make([]byte, len(message))
-			copy(msg, message)
-			tip = true
+			msg = append(msg, message...)
 			continue
 		}
-		tip = false
+		msg = make([]byte, 0)
 
 		//处理退分
 		if cmd.Type == "refund" {
