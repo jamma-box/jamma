@@ -157,25 +157,34 @@ func (b *Box) Seat(seat int, c *websocket.Conn, user int64) {
 
 	b.Seats[seat].Client = nil
 
-	//超时退出
-	time.AfterFunc(time.Minute*2, func() {
-		if b.Seats[seat].Client != nil {
-			return
-		}
+	//意外退出
+	if b.Seats[seat].UserId != 0 {
+		//超时退出 1 分钟退币
+		time.AfterFunc(time.Minute, func() {
+			if b.Seats[seat].Client != nil {
+				return
+			}
 
-		if b.gamePad != nil {
-			_ = b.gamePad.WriteJSON(map[string]any{
-				"seat": seat,
-				"type": "stand",
+			if b.gamePad != nil {
+				_ = b.gamePad.WriteJSON(map[string]any{"seat": seat, "type": "refund"})
+			}
+
+			//超时退出 2 分钟站起来
+			time.AfterFunc(time.Minute, func() {
+				if b.Seats[seat].Client != nil {
+					return
+				}
+
+				if b.gamePad != nil {
+					_ = b.gamePad.WriteJSON(map[string]any{"seat": seat, "type": "stand"})
+				}
+
+				b.Seats[seat].UserId = 0
 			})
-		}
+		})
 
-		if b.Seats[seat].UserId != 0 {
-			//应该下分???
+	}
 
-			b.Seats[seat].UserId = 0
-		}
-	})
 }
 
 var boxes lib.Map[Box]
