@@ -166,7 +166,7 @@ func (b *Box) Seat(seat int, c *websocket.Conn, user int64) {
 			}
 
 			if b.gamePad != nil {
-				_ = b.gamePad.WriteJSON(map[string]any{"seat": seat, "type": "refund"})
+				_ = b.gamePad.WriteJSON(map[string]any{"seat": seat, "type": "click", "key": "refund"})
 			}
 
 			//超时退出 2 分钟站起来
