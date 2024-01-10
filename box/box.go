@@ -3,15 +3,17 @@ package box
 import (
 	"arcade/types"
 	"encoding/json"
+	"time"
+
 	"github.com/gorilla/websocket"
 	"github.com/zgwit/iot-master/v3/pkg/db"
 	"github.com/zgwit/iot-master/v3/pkg/lib"
 	"github.com/zgwit/iot-master/v3/pkg/log"
-	"time"
 )
 
 type Seat struct {
 	UserId int64           `json:"user_id"`
+	LastId int64           `json:"last_id"`
 	Client *websocket.Conn `json:"-"`
 }
 
@@ -119,7 +121,7 @@ func (b *Box) Pad(c *websocket.Conn) {
 		if cmd.Type == "refund" {
 			log.Println("refund", cmd.Coin)
 			var user types.User
-			has, err := db.Engine.ID(b.Seats[cmd.Seat].UserId).Get(&user)
+			has, err := db.Engine.ID(b.Seats[cmd.Seat].LastId).Get(&user)
 			if err != nil {
 				log.Println(err)
 				continue
@@ -135,6 +137,7 @@ func (b *Box) Pad(c *websocket.Conn) {
 
 func (b *Box) Seat(seat int, c *websocket.Conn, user int64) {
 	b.Seats[seat].UserId = user
+	b.Seats[seat].LastId = user
 	b.Seats[seat].Client = c
 
 	for {
