@@ -35,7 +35,7 @@ func main() {
 
 	err = db.Engine.Sync2(
 		new(types.User), new(types.Me), new(types.Password), new(types.UserHistory),
-		new(types.Game), new(types.Box), new(types.Recharge),
+		new(types.Game), new(types.Box), new(types.Recharge), new(types.Exchange),
 		new(types.SignIn), new(types.Email),
 		new(chat.RedPacket), new(chat.GrabPacket))
 	if err != nil {

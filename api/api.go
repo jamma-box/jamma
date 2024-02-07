@@ -106,6 +106,8 @@ func RegisterRoutes(router *gin.RouterGroup) {
 
 	rechargeRouter(router.Group("/recharge"))
 
+	exchangeRouter(router.Group("/exchange"))
+
 	signRouter(router.Group("/sign"))
 
 	imgRouter(router.Group("/img"))

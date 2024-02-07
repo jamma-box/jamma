@@ -140,6 +140,11 @@ func (b *Box) Seat(seat int, c *websocket.Conn, user int64) {
 	b.Seats[seat].LastId = user
 	b.Seats[seat].Client = c
 
+	//看门狗
+	dog := time.AfterFunc(time.Second*30, func() {
+		_ = c.Close()
+	})
+
 	for {
 		mt, message, err := c.ReadMessage()
 		if err != nil {
@@ -147,6 +152,7 @@ func (b *Box) Seat(seat int, c *websocket.Conn, user int64) {
 			break
 		}
 		log.Println("seat", string(message))
+		dog.Reset(time.Second * 30) //喂狗
 
 		b.mt = mt
 		if b.gamePad != nil {
