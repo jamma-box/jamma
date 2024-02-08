@@ -2,8 +2,10 @@ package api
 
 import (
 	"arcade/types"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
+	"github.com/zgwit/iot-master/v3/pkg/db"
 )
 
 // @Summary 查询消费记录数量
@@ -68,7 +70,22 @@ func exchangeRouter(app *gin.RouterGroup) {
 
 	app.GET("/list", curd.ApiList[types.Exchange]())
 
-	app.POST("/create", curd.ApiCreateHook[types.Exchange](nil, nil))
+	app.POST("/create", curd.ApiCreateHook[types.Exchange](func(m *types.Exchange) error {
+		var user types.User
+		has, err := db.Engine.ID(m.UserId).Get(&user)
+		if err != nil {
+			return err
+		}
+		if !has {
+			return errors.New("无此用户")
+		}
+		if user.Balance < m.Amount {
+			return errors.New("余额不足")
+		}
+		user.Balance = user.Balance - m.Amount
+		_, err = db.Engine.Cols("balance").Update(&user)
+		return err
+	}, nil))
 
 	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Exchange]())
 }

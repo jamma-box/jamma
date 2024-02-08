@@ -11,7 +11,7 @@ type User struct {
 	Email     string    `json:"email,omitempty" form:"email"`                 //邮箱
 	Cellphone string    `json:"cellphone,omitempty" form:"cellphone"`         //手机
 	Avatar    string    `json:"avatar,omitempty" form:"avatar"`               //头像
-	Balance   float64   `json:"balance" form:"balance"`                       //余额
+	Balance   int64     `json:"balance" form:"balance"`                       //余额
 	Gender    string    `json:"gender,omitempty" form:"gender"`               //性别
 	Signature string    `json:"signature,omitempty" form:"signature"`         //签字
 	Integral  int64     `json:"integral" form:"integral"`                     //游戏积分

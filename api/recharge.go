@@ -2,8 +2,10 @@ package api
 
 import (
 	"arcade/types"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
+	"github.com/zgwit/iot-master/v3/pkg/db"
 )
 
 // @Summary 查询重置记录数量
@@ -68,7 +70,19 @@ func rechargeRouter(app *gin.RouterGroup) {
 
 	app.GET("/list", curd.ApiList[types.Recharge]())
 
-	app.POST("/create", curd.ApiCreateHook[types.Recharge](nil, nil))
+	app.POST("/create", curd.ApiCreateHook[types.Recharge](nil, func(m *types.Recharge) error {
+		var user types.User
+		has, err := db.Engine.ID(m.UserId).Get(&user)
+		if err != nil {
+			return err
+		}
+		if !has {
+			return errors.New("无此用户")
+		}
+		user.Balance = user.Balance + m.Amount
+		_, err = db.Engine.Cols("balance").Update(&user)
+		return err
+	}))
 
 	app.GET("/:id", curd.ParseParamId, curd.ApiGet[types.Recharge]())
 }
