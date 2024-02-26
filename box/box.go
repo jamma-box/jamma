@@ -39,7 +39,7 @@ func New(b *types.Box) *Box {
 type PadCommand struct {
 	Seat int    `json:"seat,omitempty"`
 	Type string `json:"type,omitempty"`
-	Coin int    `json:"coin,omitempty"`
+	Coin int64  `json:"coin,omitempty"`
 }
 
 func (b *Box) Bridge(c *websocket.Conn) {
@@ -127,7 +127,7 @@ func (b *Box) Pad(c *websocket.Conn) {
 				continue
 			}
 			if has {
-				user.Balance = user.Balance + float64(cmd.Coin)
+				user.Balance = user.Balance + cmd.Coin
 				_, _ = db.Engine.ID(user.Id).Cols("balance").Update(&user)
 			}
 		}
@@ -175,11 +175,12 @@ func (b *Box) Seat(seat int, c *websocket.Conn, user int64) {
 			}
 
 			if b.gamePad != nil {
-				_ = b.gamePad.WriteJSON(map[string]any{"seat": seat, "type": "click", "key": "refund"})
+				//避免逻辑错误
+				//_ = b.gamePad.WriteJSON(map[string]any{"seat": seat, "type": "click", "key": "refund"})
 			}
 
 			//超时退出 2 分钟站起来
-			time.AfterFunc(time.Minute, func() {
+			time.AfterFunc(time.Minute*5, func() {
 				if b.Seats[seat].Client != nil {
 					return
 				}

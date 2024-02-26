@@ -30,9 +30,9 @@ type RedPacket struct {
 	UserId       string    `json:"user_id" xorm:"index"`
 	Type         int64     `json:"type"` //0：默认红包，1:随机红包，
 	Room         string    `json:"room"`
-	CurrentMoney float64   `json:"current_money"`
+	CurrentMoney int64     `json:"current_money"`
 	CurrentNum   int64     `json:"current_num"`
-	TotalMoney   float64   `json:"total_money"`
+	TotalMoney   int64     `json:"total_money"`
 	TotalNum     int64     `json:"total_num"`
 	Created      time.Time `json:"created" xorm:"created"`
 }

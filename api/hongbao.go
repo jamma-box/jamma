@@ -12,12 +12,12 @@ import (
 
 // 红包请求参数
 type HongBaoReq struct {
-	UserId      string  `json:"user_id"`
-	Money       float64 `json:"money"`    //红包金额
-	Num         int64   `json:"num"`      //红包数量
-	PayPassword string  `json:"password"` //支付密码
-	Type        int64   `json:"type"`     //红包类型,0:默认红包，1：随机红包
-	Room        string  `json:"room"`
+	UserId      string `json:"user_id"`
+	Money       int64  `json:"money"`    //红包金额
+	Num         int64  `json:"num"`      //红包数量
+	PayPassword string `json:"password"` //支付密码
+	Type        int64  `json:"type"`     //红包类型,0:默认红包，1：随机红包
+	Room        string `json:"room"`
 }
 
 func hongbaoRouter(app *gin.RouterGroup) {

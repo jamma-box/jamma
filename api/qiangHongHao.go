@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/zgwit/iot-master/v3/pkg/curd"
 	"github.com/zgwit/iot-master/v3/pkg/db"
-	"math/rand"
 	"sync"
 )
 
@@ -63,18 +62,18 @@ func qiangHongBao(c *gin.Context, qhb *QiangHongBao) {
 	}
 	//	根据算法生成红包金额
 	var money float64
-	if hb.Type == 0 {
-		//	默认红包
-		money = hb.TotalMoney / float64(hb.TotalNum)
-
-	} else if hb.Type == 1 {
-		//	根据算法生成红包金额
-		money = (hb.TotalMoney / float64(hb.TotalNum)) * rand.Float64()
-	}
-	//加钱扣钱
-	hb.CurrentMoney -= money
+	//if hb.Type == 0 {
+	//	//	默认红包
+	//	money = hb.TotalMoney / hb.TotalNum)
+	//
+	//} else if hb.Type == 1 {
+	//	//	根据算法生成红包金额
+	//	money = (hb.TotalMoney / hb.TotalNum) * rand.Float64()
+	//}
+	////加钱扣钱
+	//hb.CurrentMoney -= money
 	hb.CurrentNum--
-	user.Balance += money
+	//user.Balance += money
 	//抢红包记录
 	qianghongbao := chat.GrabPacket{
 		Id:     qhb.Id,
