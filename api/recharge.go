@@ -80,7 +80,7 @@ func rechargeRouter(app *gin.RouterGroup) {
 			return errors.New("无此用户")
 		}
 		user.Balance = user.Balance + m.Amount
-		_, err = db.Engine.Cols("balance").Update(&user)
+		_, err = db.Engine.ID(m.UserId).Cols("balance").Update(&user)
 		return err
 	}))
 
